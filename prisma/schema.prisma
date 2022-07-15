@@ -41,7 +41,7 @@ model CompraVenda {
   codAtivo  String
 
   qtdeAtivo  Int
-  compra Boolean  @default(true)
+  compra Boolean  
   createdAt   DateTime  @default(now())
 
   @@map("compraVenda")
@@ -53,7 +53,7 @@ model DepositoRetirada {
   codCliente String 
 
   valor Decimal
-  deposito Boolean  @default(true)
+  deposito Boolean  
   createdAt   DateTime  @default(now())
 
   @@map("depositoRetirada")

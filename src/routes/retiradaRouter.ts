@@ -2,7 +2,6 @@ import { Router } from 'express';
 import { DepositoRetiradaController } from '../controllers/depositoRetiradaController';
 
 const router = Router();
-const depositoRetiradaController = new DepositoRetiradaController(false);
-router.post('/', depositoRetiradaController.create);
+router.post('/', new DepositoRetiradaController(false).create);
 
 export default router;
