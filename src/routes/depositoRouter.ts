@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { DepositoRetiradaController } from '../controllers/depositoRetirada';
+import { DepositoRetiradaController } from '../controllers/depositoRetiradaController';
 
 const router = Router();
 const depositoRetiradaController = new DepositoRetiradaController(true);
