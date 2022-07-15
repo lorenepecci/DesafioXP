@@ -20,6 +20,7 @@
   "homepage": "https://github.com/lorenepecci/DesafioXPinc#readme",
   "devDependencies": {
     "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "^18.0.4",
     "eslint": "^8.19.0",
     "prisma": "^4.0.0",
