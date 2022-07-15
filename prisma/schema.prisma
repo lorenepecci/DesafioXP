@@ -27,7 +27,7 @@ model Ativo {
   qtdeAtivo Int
   valorAtivo Decimal
 
-  compras CompraVenda[] @relation("compraVenda")
+  compras CompraVenda[] @relation("compraVendaAtivo")
 
   @@map("ativosCorretora")
 }
@@ -37,7 +37,7 @@ model CompraVenda {
   cliente   Cliente   @relation("compraVenda",fields: [codCliente], references: [codCliente])
   codCliente String
 
-  ativo   Ativo   @relation("compraVenda",fields: [codAtivo], references: [codAtivo])
+  ativo   Ativo   @relation("compraVendaAtivo",fields: [codAtivo], references: [codAtivo])
   codAtivo  String
 
   qtdeAtivo  Int
@@ -52,7 +52,7 @@ model DepositoRetirada {
   cliente   Cliente   @relation("depositoRetirada",fields: [codCliente], references: [codCliente])
   codCliente String 
 
-  valor Decimal
+  valorAtivo Decimal
   deposito Boolean  @default(true)
   createdAt   DateTime  @default(now())
 
