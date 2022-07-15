@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { ClientesController } from '../controllers/clientesController';
 
 const router = Router();
+const clientesController = new ClientesController();
+router.post('/', clientesController.create);
 
-router.post( '/', ClientesController.create );
-
-export default router ;
+export default router;

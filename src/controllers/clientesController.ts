@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-import { IUserCreateRequest } from '../interfaces/index';
-import { UserService } from '../services/userService';
+import { ClientesService } from '../services/clientesServices';
 
 const _service = new ClientesService();
 export class ClientesController {
