@@ -8,7 +8,14 @@ export class ClientesModel {
     this._prisma = prisma;
   }
   async create(cliente: ICliente) {
-
     return this._prisma.cliente.create({ data: cliente });
+  }
+
+  async getByEmail(email: string) {
+    return this._prisma.cliente.findUnique({ where: { email } });
+  }
+
+  async getByClienteCod(codCliente: string) {
+    return this._prisma.cliente.findUnique({ where: { codCliente } });
   }
 }

@@ -52,7 +52,7 @@ model DepositoRetirada {
   cliente   Cliente   @relation("depositoRetirada",fields: [codCliente], references: [codCliente])
   codCliente String 
 
-  valorAtivo Decimal
+  valor Decimal
   deposito Boolean  @default(true)
   createdAt   DateTime  @default(now())
 
