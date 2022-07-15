@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Cliente {
+  codCliente   String                   @id @default(uuid())
+  name String
+  password String 
+  email String @unique
+  saldo Decimal 
+
+  compras CompraVenda[] @relation("compraVenda")
+  depositos DepositoRetirada[] @relation("depositoRetirada")
+  @@map("clientes")
+}
+
+model Ativo {
+  codAtivo   String                   @id @default(uuid())
+  qtdeAtivo Int
+  valorAtivo Decimal
+
+  compras CompraVenda[] @relation("compraVenda")
+
+  @@map("ativosCorretora")
+}
+
+model CompraVenda {
+  id  String @id @default(uuid()) 
+  cliente   Cliente   @relation("compraVenda",fields: [codCliente], references: [codCliente])
+  codCliente String
+
+  ativo   Ativo   @relation("compraVenda",fields: [codAtivo], references: [codAtivo])
+  codAtivo  String
+
+  qtdeAtivo  Int
+  compra Boolean  @default(true)
+  createdAt   DateTime  @default(now())
+
+  @@map("compraVenda")
+}
+
+model DepositoRetirada {
+  id  String @id @default(uuid()) 
+  cliente   Cliente   @relation("depositoRetirada",fields: [codCliente], references: [codCliente])
+  codCliente String 
+
+  valor Decimal
+  deposito Boolean  @default(true)
+  createdAt   DateTime  @default(now())
+
+  @@map("depositoRetirada")
+}
+
