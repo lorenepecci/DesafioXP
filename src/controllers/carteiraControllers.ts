@@ -6,5 +6,5 @@ export class CarteirasController {
   async create(req: Request, res: Response) {
     return res.status(200);
   }
-  // vai ter get apenas
+  // vai ter get aqui. 
 }

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import authenticateToken from '../helpers/authenticateToken';
+import authenticateToken from '../helpers/autenticarToken';
 
 const authenticationMiddleware = async (
   req: Request,

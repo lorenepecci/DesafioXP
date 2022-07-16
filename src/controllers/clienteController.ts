@@ -8,4 +8,10 @@ export class ClientesController {
     const clientPost = await _service.create({ name, email, password, saldo });
     return res.status(200).json(clientPost);
   }
+
+  async getSaldoCliente(req: Request, res: Response) {
+    const { codCliente } = req.params;
+    const getSaldoCliente = await _service.getSaldoCliente(codCliente);
+    return res.status(200).json(getSaldoCliente);
+  }
 }

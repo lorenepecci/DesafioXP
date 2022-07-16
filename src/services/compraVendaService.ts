@@ -18,7 +18,7 @@ export class CompraVendaService {
   }
   async create(compraVenda: Omit<ICompraVenda, 'valor'>) {
     const { codCliente, codAtivo, qtdeAtivo, compra } = compraVenda;
-    const findValorAtivo = await this._modelAtivo.getByCod(
+    const findValorAtivo = await this._modelAtivo.getByAssets(
       compraVenda.codAtivo
     );
     if (findValorAtivo) {

@@ -14,9 +14,9 @@ export class CompraVendaController {
         codAtivo,
         qtdeAtivo,
         compra: true,
-        codCliente,
+        codCliente, 
       });
-      return res.status(200).json(compraVendaCreated);
+      return res.status(200).json(compraVendaCreated); 
     }
   }
 }

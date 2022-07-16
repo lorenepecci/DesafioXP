@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime';
 import { ICliente } from '../interfaces/clientes';
 
 export class ClientesModel {
@@ -17,5 +18,17 @@ export class ClientesModel {
 
   async getByClienteCod(codCliente: string) {
     return this._prisma.cliente.findUnique({ where: { codCliente } });
+  };
+
+  async updateSaldo(codCliente: string, saldo: number) {
+    console.log(saldo, new Decimal(saldo));
+    return this._prisma.cliente.update({
+      where: {
+        codCliente,
+      },
+      data: {
+        saldo: new Decimal(saldo),
+      },
+    });
   }
 }

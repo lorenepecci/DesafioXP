@@ -4,6 +4,4 @@ export interface ICarteiras {
   codCliente: string;
   codAtivo: string;
   qtdeAtivo: number;
-  valor: Decimal;
-  compra: boolean;
 }

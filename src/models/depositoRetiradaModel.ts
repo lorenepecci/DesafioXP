@@ -7,7 +7,14 @@ export class DepositoRetiradaModel {
   constructor(prisma = new PrismaClient()) {
     this._prisma = prisma;
   }
-  async create ( depositoRetirada: IDepositoRetirada ) {
-    return this._prisma.depositoRetirada.create({ data: depositoRetirada });
+  async create(depositoRetirada: IDepositoRetirada) {
+    const { codCliente, deposito, valor } = depositoRetirada;
+    return this._prisma.depositoRetirada.create({
+      data: {
+        codCliente,
+        deposito,
+        valor,
+      },
+    });
   }
 }

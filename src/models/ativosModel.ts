@@ -11,7 +11,7 @@ export class AtivosModel {
     return this._prisma.ativo.create({ data: ativo });
   }
 
-  async getByCod(cod: string) {
+  async getByAssets(cod: string) {
     return this._prisma.ativo.findUnique({ where: { codAtivo: cod } });
   }
 }

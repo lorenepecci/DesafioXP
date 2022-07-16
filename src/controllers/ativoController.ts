@@ -12,9 +12,9 @@ export class AtivosController {
     return res.status(200).json(ativoCreated);
   }
 
-  async getByCod(req: Request, res: Response) {
+  async getByAssets(req: Request, res: Response) {
     const { cod } = req.params;
-    const getAtivo = await _service.getByCod(cod);
+    const getAtivo = await _service.getByAssets(cod);
     return res.status(200).json(getAtivo);
   }
 }

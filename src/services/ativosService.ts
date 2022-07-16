@@ -11,7 +11,7 @@ export class AtivosService {
     return await this._model.create(ativo);
   }
 
-  async getByCod(cod: string ) {
-    return await this._model.getByCod(cod);
+  async getByAssets(cod: string) {
+    return await this._model.getByAssets(cod);
   }
 }

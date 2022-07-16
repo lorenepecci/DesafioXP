@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import jsonToken, { Secret } from 'jsonwebtoken';
-import HttpException from './errorClass';
+import HttpException from './erroClasse';
 
 const TOKEN_SECRET: Secret =
   'my-character-ultra-secure-and-ultra-long-secretXP';
