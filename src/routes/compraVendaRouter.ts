@@ -1,9 +1,13 @@
 import { Router } from 'express';
-import { CompraVendaController } from '../controllers/compraVendaController';
+import { VendaController } from '../controllers/vendaController';
+import { validarCompraVenda } from '../middlewares/middlewareCompraVenda';
+import { CompraController } from './../controllers/compraController';
 
 const router = Router();
-const compraVendaController = new CompraVendaController();
+const comprarController = new CompraController();
+const venderController = new VendaController();
 
-router.post('/', compraVendaController.create);
+router.post('/comprar', validarCompraVenda, comprarController.create);
+router.post('/vender', validarCompraVenda, venderController.create);
 
 export default router;

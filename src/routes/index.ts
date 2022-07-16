@@ -1,22 +1,25 @@
 import { Router } from 'express';
 import { authenticationMiddleware } from '../middlewares/autenticar';
+import { validarDepositoRetirada } from '../middlewares/middlewareDepositoRetirada';
 import ativosRouter from './ativosRouter';
 import clientesRouter from './clientesRouter';
 import compraVendaRouter from './compraVendaRouter';
-import depositoRouter from './depositoRouter';
+import depositoRetiradaRouter from './depositoRetiradaRouter';
 import loginRouter from './loginRouter';
-import retiradaRouter from './retiradaRouter';
 
 const router = Router();
 
 router.use('/clientes', clientesRouter);
-router.use('/conta', clientesRouter);
 router.use('/login', loginRouter);
-router.use('/conta/deposito', authenticationMiddleware, depositoRouter);
-router.use('/conta/saque', authenticationMiddleware, retiradaRouter);
-router.use('/ativos', authenticationMiddleware, ativosRouter);
 router.use(
-  '/investimentos/comprar',
+  '/conta',
+  authenticationMiddleware,
+  depositoRetiradaRouter
+);
+router.use( '/ativos', authenticationMiddleware, ativosRouter );
+
+router.use(
+  '/investimentos',
   authenticationMiddleware,
   compraVendaRouter
 );

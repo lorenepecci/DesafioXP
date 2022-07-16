@@ -14,4 +14,15 @@ export class AtivosModel {
   async getByAssets(cod: string) {
     return this._prisma.ativo.findUnique({ where: { codAtivo: cod } });
   }
+
+  async updateQuantidadeAtivo(codAtivo: string, qtdeAtivo: number) {
+    return this._prisma.ativo.update({
+      where: {
+        codAtivo,
+      },
+      data: {
+        qtdeAtivo,
+      },
+    });
+  }
 }

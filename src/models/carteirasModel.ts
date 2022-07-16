@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { ICompraVenda } from '../interfaces/compraVenda';
+import { ICarteiras } from '../interfaces/carteiras';
 
 export class CarteirasModel {
   private _prisma: PrismaClient;
@@ -7,10 +7,10 @@ export class CarteirasModel {
   constructor(prisma = new PrismaClient()) {
     this._prisma = prisma;
   }
-  async create(compraVenda: ICompraVenda) {
-    return 'ok';
+  async create(compraVenda: ICarteiras) {
+    return this._prisma.carteiraCliente.create({ data: compraVenda });
   }
-  async getOne(codAtivo: string, codCliente: string) {
+  async getClienteCarteiraAtivo(codAtivo: string, codCliente: string) {
     return this._prisma.carteiraCliente.findFirst({
       where: {
         codAtivo,

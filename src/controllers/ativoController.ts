@@ -5,11 +5,11 @@ const _service = new AtivosService();
 export class AtivosController {
   async create(req: Request, res: Response) {
     const { codAtivo, qtdeAtivo, valorAtivo } = req.body;
-    const ativoCreated = await _service.create({
+    const ativoCriado = await _service.create({
       qtdeAtivo,
       valorAtivo,
     });
-    return res.status(200).json(ativoCreated);
+    return res.status(200).json(ativoCriado);
   }
 
   async getByAssets(req: Request, res: Response) {

@@ -1,21 +1,21 @@
 import { Request, Response } from 'express';
 import { ICliente } from '../interfaces/clientes';
-import { CompraVendaService } from '../services/compraVendaService';
+import { VendaService } from '../services/vendaService';
 
-const _service = new CompraVendaService();
-export class CompraVendaController {
+const _service = new VendaService();
+export class VendaController {
   async create(req: Request, res: Response) {
     const { codAtivo, qtdeAtivo } = req.body;
     const clienteLogado = JSON.parse(res.locals.payload.dataUser) as ICliente;
     const { codCliente } = clienteLogado as ICliente;
     if (codCliente) {
-      const compraVendaCreated = await _service.create({
+      const vendaCreated = await _service.create({
         codAtivo,
         qtdeAtivo,
-        compra: true,
-        codCliente, 
+        compra: false,
+        codCliente,
       });
-      return res.status(200).json(compraVendaCreated); 
+      return res.status(200).json(vendaCreated);
     }
   }
 }

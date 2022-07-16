@@ -4,8 +4,8 @@ import { ICompraVenda } from '../interfaces/compraVenda';
 import { AtivosModel } from '../models/ativosModel';
 import { CompraVendaModel } from '../models/compraVendaModel';
 import { CarteirasService } from './../services/carteirasService';
-export class CompraVendaService {
-  private _model: CompraVendaModel; 
+export class VendaService {
+  private _model: CompraVendaModel;
   private _modelAtivo: AtivosModel;
   private _serviceCarteira: CarteirasService;
   constructor(
@@ -30,13 +30,13 @@ export class CompraVendaService {
           'Essa quantidade é maior que a quantidade disponível na corretora'
         );
       }
-      await this._serviceCarteira.handleCarteira({
+    /*   await this._serviceCarteira.handleCarteira({
         codCliente,
         codAtivo,
         qtdeAtivo,
         compra,
         valor: encontrarAtivo.valorAtivo,
-      });
+      }); */
       return await this._model.create({
         ...compraVenda,
         valor: encontrarAtivo.valorAtivo,

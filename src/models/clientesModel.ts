@@ -18,10 +18,9 @@ export class ClientesModel {
 
   async getByClienteCod(codCliente: string) {
     return this._prisma.cliente.findUnique({ where: { codCliente } });
-  };
+  }
 
   async updateSaldo(codCliente: string, saldo: number) {
-    console.log(saldo, new Decimal(saldo));
     return this._prisma.cliente.update({
       where: {
         codCliente,

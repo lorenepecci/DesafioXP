@@ -10,15 +10,13 @@ export class DepositoRetiradaController {
 
   async create(req: Request, res: Response) {
     const { codCliente, valor } = req.body;
-    const clienteLogado = JSON.parse(res.locals.payload.dataUser);
-    const { codClienteLogado } = clienteLogado;
-    if (codCliente === codClienteLogado) {
-      const criadoDeposito = await _service.create({
-        codCliente,
-        deposito: true,
-        valor,
-      });
-      return res.status(200).json(criadoDeposito);
-    }
+    //const clienteLogado = JSON.parse(res.locals.payload.dataUser);
+    //const { codClienteLogado } = clienteLogado;
+    const criadoDeposito = await _service.create({
+      codCliente,
+      deposito: true,
+      valor,
+    });
+    return res.status(200).json(criadoDeposito);
   }
 }

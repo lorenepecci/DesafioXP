@@ -4,5 +4,5 @@ export interface ICliente {
   name: string;
   password: string;
   email: string;
-  saldo: Decimal;
+  saldo?: Decimal;
 }
