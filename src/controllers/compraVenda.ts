@@ -5,7 +5,7 @@ import { CompraVendaService } from '../services/compraVendaService';
 const _service = new CompraVendaService();
 export class CompraVendaController {
   async create(req: Request, res: Response) {
-    const { codAtivo, qtdeAtivo} = req.body;
+    const { codAtivo, qtdeAtivo } = req.body;
 
     const clienteLogged = JSON.parse(res.locals.payload.dataUser) as ICliente;
     const { codCliente } = clienteLogged as ICliente;

@@ -8,7 +8,10 @@ export class AtivosModel {
     this._prisma = prisma;
   }
   async create(ativo: IAtivo) {
-    return this._prisma.ativo.create({data: ativo})
+    return this._prisma.ativo.create({ data: ativo });
   }
 
+  async getByCod(cod: string) {
+    return this._prisma.ativo.findUnique({ where: { codAtivo: cod } });
+  }
 }

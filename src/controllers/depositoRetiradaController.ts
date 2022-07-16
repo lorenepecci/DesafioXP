@@ -6,7 +6,7 @@ const _service = new DepositoRetiradaService();
 export class DepositoRetiradaController {
   _isDeposito: boolean;
   constructor(isDeposito: boolean) {
-    console.log(isDeposito, 'log');
+    /* console.log(isDeposito, 'log'); */
     this._isDeposito = isDeposito;
   }
 

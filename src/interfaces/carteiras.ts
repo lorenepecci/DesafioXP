@@ -1,11 +1,9 @@
 import { Decimal } from '@prisma/client/runtime';
-
-export interface ICompraVenda {
+export interface ICarteiras {
   id?: string;
   codCliente: string;
   codAtivo: string;
   qtdeAtivo: number;
-  compra: boolean;
-  createdAt?: Date;
   valor: Decimal;
+  compra: boolean;
 }
