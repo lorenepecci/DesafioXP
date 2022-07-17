@@ -4,7 +4,7 @@ import { AtivosService } from '../services/ativosService';
 const _service = new AtivosService();
 export class AtivosController {
   async create(req: Request, res: Response) {
-    const { codAtivo, qtdeAtivo, valorAtivo } = req.body;
+    const { qtdeAtivo, valorAtivo } = req.body;
     const ativoCriado = await _service.create({
       qtdeAtivo,
       valorAtivo,
@@ -13,8 +13,8 @@ export class AtivosController {
   }
 
   async getByAssets(req: Request, res: Response) {
-    const { cod } = req.params;
-    const getAtivo = await _service.getByAssets(cod);
+    const { codAtivo } = req.params;
+    const getAtivo = await _service.getByAssets(codAtivo);
     return res.status(200).json(getAtivo);
   }
 }

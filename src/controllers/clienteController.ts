@@ -4,9 +4,9 @@ import { ClientesService } from '../services/clientesService';
 const _service = new ClientesService();
 export class ClientesController {
   async create(req: Request, res: Response) {
-    const { name, email, password, saldo } = req.body;
-    const clientPost = await _service.create({ name, email, password, saldo });
-    return res.status(200).json(clientPost);
+    const {nome, email, senha } = req.body;
+    const clientePostado = await _service.create({nome, email, senha });
+    return res.status(200).json(clientePostado);
   }
 
   async getSaldoCliente(req: Request, res: Response) {

@@ -1,8 +1,8 @@
 import { Decimal } from '@prisma/client/runtime';
 export interface ICliente {
-  codCliente?: string;
-  name: string;
-  password: string;
+  codCliente?: number;
+  nome: string;
+  senha: string;
   email: string;
   saldo?: Decimal;
 }

@@ -11,11 +11,11 @@ export class AtivosModel {
     return this._prisma.ativo.create({ data: ativo });
   }
 
-  async getByAssets(cod: string) {
-    return this._prisma.ativo.findUnique({ where: { codAtivo: cod } });
+  async getByAssets(codAtivo: number) {
+    return this._prisma.ativo.findUnique({ where: { codAtivo } });
   }
 
-  async updateQuantidadeAtivo(codAtivo: string, qtdeAtivo: number) {
+  async updateQuantidadeAtivo(codAtivo: number, qtdeAtivo: number) {
     return this._prisma.ativo.update({
       where: {
         codAtivo,

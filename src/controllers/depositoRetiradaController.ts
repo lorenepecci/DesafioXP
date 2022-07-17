@@ -14,7 +14,7 @@ export class DepositoRetiradaController {
     //const { codClienteLogado } = clienteLogado;
     const criadoDeposito = await _service.create({
       codCliente,
-      deposito: true,
+      tipoDeposito: true,
       valor,
     });
     return res.status(200).json(criadoDeposito);

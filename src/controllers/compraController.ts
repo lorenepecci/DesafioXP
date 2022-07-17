@@ -9,13 +9,13 @@ export class CompraController {
     const clienteLogado = JSON.parse(res.locals.payload.dataUser) as ICliente;
     const { codCliente } = clienteLogado as ICliente;
     if (codCliente) {
-      const compraCreated = await _service.create({
+      const compraCriada = await _service.create({
         codAtivo,
         qtdeAtivo,
-        compra: true,
+        tipoCompra: true,
         codCliente, 
       });
-      return res.status(200).json(compraCreated); 
+      return res.status(200).json(compraCriada); 
     }
   }
 }

@@ -1,6 +1,5 @@
 import { Router } from 'express';
-import { authenticationMiddleware } from '../middlewares/autenticar';
-import { validarDepositoRetirada } from '../middlewares/middlewareDepositoRetirada';
+import { autenticarMiddleware } from '../middlewares/autenticar';
 import ativosRouter from './ativosRouter';
 import clientesRouter from './clientesRouter';
 import compraVendaRouter from './compraVendaRouter';
@@ -11,17 +10,9 @@ const router = Router();
 
 router.use('/clientes', clientesRouter);
 router.use('/login', loginRouter);
-router.use(
-  '/conta',
-  authenticationMiddleware,
-  depositoRetiradaRouter
-);
-router.use( '/ativos', authenticationMiddleware, ativosRouter );
+router.use('/conta', autenticarMiddleware, depositoRetiradaRouter);
+router.use('/ativos', autenticarMiddleware, ativosRouter);
 
-router.use(
-  '/investimentos',
-  authenticationMiddleware,
-  compraVendaRouter
-);
+router.use('/investimentos', autenticarMiddleware, compraVendaRouter);
 
 export { router };

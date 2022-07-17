@@ -1,4 +1,4 @@
-import HttpException from '../helpers/erroClasse';
+import { ErroHttp } from '../helpers/erroHttp';
 import { IDepositoRetirada } from '../interfaces/depositoRetirada';
 import { ClientesModel } from '../models/clientesModel';
 import { DepositoRetiradaModel } from '../models/depositoRetiradaModel';
@@ -15,24 +15,24 @@ export class DepositoRetiradaService {
   }
   async create(
     depositoRetirada: IDepositoRetirada
-  ): Promise<IDepositoRetirada | HttpException> {
-    const { codCliente, valor, deposito } = depositoRetirada;
+  ): Promise<IDepositoRetirada | ErroHttp> {
+    const { codCliente, valor, tipoDeposito } = depositoRetirada;
     const saldoCliente = await this._modelCliente
       .getByClienteCod(codCliente)
       .then((cliente) => cliente?.saldo);
 
     if (saldoCliente) {
       let saldoNovo;
-      if (deposito === false) {
+      if (tipoDeposito === false) {
         if (Number(valor) > Number(saldoCliente)) {
-          throw new HttpException(
+          throw new ErroHttp(
             400,
             `Você não tem saldo disponível. Seu saldo é de ${saldoCliente}`
           );
         }
         saldoNovo = Number(saldoCliente) - Number(valor);
         await this._modelCliente.updateSaldo(codCliente, saldoNovo);
-      } else if (deposito === true) {
+      } else if (tipoDeposito === true) {
         saldoNovo = Number(saldoCliente) + Number(valor);
         await this._modelCliente.updateSaldo(codCliente, saldoNovo);
       }

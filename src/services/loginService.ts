@@ -1,6 +1,6 @@
 import 'express-async-errors';
-import HttpException from '../helpers/erroClasse';
-import generateToken from '../helpers/gerarToken';
+import {ErroHttp} from '../helpers/erroHttp';
+import gerarToken from '../helpers/gerarToken';
 import { ILogin } from '../interfaces/login';
 import { ClientesModel } from '../models/clientesModel';
 
@@ -12,10 +12,10 @@ export class LoginService {
   async create(cliente: ILogin) {
     const getCliente = await this._model.getByEmail(cliente.email);
 
-    if (getCliente && getCliente?.password === cliente.password) {
-      const token = generateToken(JSON.stringify(getCliente));
+    if (getCliente && getCliente?.senha === cliente.senha) {
+      const token = gerarToken(JSON.stringify(getCliente));
       return { token };
     }
-    throw new HttpException(401, 'Email ou senha inválida.');
+    throw new ErroHttp(401, 'Email ou senha inválida.');
   }
 }

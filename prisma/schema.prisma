@@ -11,9 +11,9 @@ datasource db {
 }
 
 model Cliente {
-  codCliente   String                   @id @default(uuid())
-  name String
-  password String 
+  codCliente  Int @id @default(autoincrement())
+  nome String
+  senha String 
   email String @unique
   saldo Decimal @default(0)
 
@@ -24,7 +24,7 @@ model Cliente {
 }
 
 model Ativo {
-  codAtivo   String                   @id @default(uuid())
+  codAtivo   Int @id @default(autoincrement())
   qtdeAtivo Int
   valorAtivo Decimal
 
@@ -35,40 +35,40 @@ model Ativo {
 }
 
 model CarteiraCliente {
-  id  String @id @default(uuid()) 
+  idCarteira  Int @id @default(autoincrement()) 
   cliente   Cliente   @relation("carteira",fields: [codCliente], references: [codCliente])
-  codCliente String
+  codCliente Int
 
   ativo   Ativo   @relation("carteira",fields: [codAtivo], references: [codAtivo])
-  codAtivo  String
+  codAtivo  Int
 
   qtdeAtivo  Int
   @@map("carteirasClientes")
 }
 
 model CompraVenda {
-  id  String @id @default(uuid()) 
+  id  Int @id @default(autoincrement())
   cliente   Cliente   @relation("compraVenda",fields: [codCliente], references: [codCliente])
-  codCliente String
+  codCliente Int
 
   ativo   Ativo   @relation("compraVendaAtivo",fields: [codAtivo], references: [codAtivo])
-  codAtivo  String
+  codAtivo  Int
 
   qtdeAtivo  Int
-  valor Decimal @default(100)
-  compra Boolean  
+  valor Decimal 
+  tipoCompra Boolean  
   createdAt   DateTime  @default(now())
 
   @@map("compraVenda")
 }
 
 model DepositoRetirada {
-  id  String @id @default(uuid()) 
+  id  Int @id @default(autoincrement())
   cliente   Cliente   @relation("depositoRetirada",fields: [codCliente], references: [codCliente])
-  codCliente String 
+  codCliente Int 
 
   valor Decimal
-  deposito Boolean  
+  tipoDeposito Boolean  
   createdAt   DateTime  @default(now())
 
   @@map("depositoRetirada")

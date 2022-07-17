@@ -1,5 +1,5 @@
 import 'express-async-errors';
-import HttpException from '../helpers/erroClasse';
+import {ErroHttp} from '../helpers/erroHttp';
 import { ICompraVenda } from '../interfaces/compraVenda';
 import { AtivosModel } from '../models/ativosModel';
 import { CompraVendaModel } from '../models/compraVendaModel';
@@ -18,14 +18,14 @@ export class VendaService {
     this._serviceCarteira = carteira;
   }
   async create(compraVenda: Omit<ICompraVenda, 'valor'>) {
-    const { codCliente, codAtivo, qtdeAtivo, compra } = compraVenda;
+    const { codCliente, codAtivo, qtdeAtivo, tipoCompra } = compraVenda;
     const encontrarAtivo = await this._modelAtivo.getByAssets(
       compraVenda.codAtivo
     );
 
     if (encontrarAtivo) {
       if (encontrarAtivo?.qtdeAtivo < qtdeAtivo) {
-        throw new HttpException(
+        throw new ErroHttp(
           400,
           'Essa quantidade é maior que a quantidade disponível na corretora'
         );
@@ -43,6 +43,6 @@ export class VendaService {
       });
     }
 
-    throw new HttpException(401, 'Este codAtivo não existe.');
+    throw new ErroHttp(401, 'Este codAtivo não existe.');
   }
 }

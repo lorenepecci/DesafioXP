@@ -10,7 +10,7 @@ export class CarteirasModel {
   async create(compraVenda: ICarteiras) {
     return this._prisma.carteiraCliente.create({ data: compraVenda });
   }
-  async getClienteCarteiraAtivo(codAtivo: string, codCliente: string) {
+  async getClienteCarteiraAtivo(codAtivo: number, codCliente: number) {
     return this._prisma.carteiraCliente.findFirst({
       where: {
         codAtivo,

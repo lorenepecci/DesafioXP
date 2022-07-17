@@ -16,11 +16,11 @@ export class ClientesModel {
     return this._prisma.cliente.findUnique({ where: { email } });
   }
 
-  async getByClienteCod(codCliente: string) {
+  async getByClienteCod(codCliente: number) {
     return this._prisma.cliente.findUnique({ where: { codCliente } });
   }
 
-  async updateSaldo(codCliente: string, saldo: number) {
+  async updateSaldo(codCliente: number, saldo: number) {
     return this._prisma.cliente.update({
       where: {
         codCliente,

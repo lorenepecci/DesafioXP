@@ -9,13 +9,13 @@ export class VendaController {
     const clienteLogado = JSON.parse(res.locals.payload.dataUser) as ICliente;
     const { codCliente } = clienteLogado as ICliente;
     if (codCliente) {
-      const vendaCreated = await _service.create({
+      const vendaCriada = await _service.create({
         codAtivo,
         qtdeAtivo,
-        compra: false,
+        tipoCompra: false,
         codCliente,
       });
-      return res.status(200).json(vendaCreated);
+      return res.status(200).json(vendaCriada);
     }
   }
 }

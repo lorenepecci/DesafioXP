@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { ClientesController } from '../controllers/clienteController';
 import { DepositoRetiradaController } from '../controllers/depositoRetiradaController';
-import { authenticationMiddleware } from '../middlewares/autenticar';
+import { autenticarMiddleware } from '../middlewares/autenticar';
 import { validarDepositoRetirada } from '../middlewares/middlewareDepositoRetirada';
 
 const router = Router();
@@ -17,7 +17,7 @@ router.post(
 );
 router.get(
   '/:codCliente',
-  authenticationMiddleware,
+  autenticarMiddleware,
   new ClientesController().getSaldoCliente
 );
 

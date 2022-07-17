@@ -1,6 +1,6 @@
 import { Decimal } from '@prisma/client/runtime';
 import 'express-async-errors';
-import HttpException from '../helpers/erroClasse';
+import { ErroHttp } from '../helpers/erroHttp';
 import { ICompraVenda } from '../interfaces/compraVenda';
 import { AtivosModel } from '../models/ativosModel';
 import { ClientesModel } from '../models/clientesModel';
@@ -24,15 +24,15 @@ export class CompraService {
     this._modelCliente = cliente;
   }
   async create(compraVenda: Omit<ICompraVenda, 'valor'>) {
-    const { codCliente, codAtivo, qtdeAtivo, compra } = compraVenda;
+    const { codCliente, codAtivo, qtdeAtivo, tipoCompra } = compraVenda;
     const encontrarAtivo = await this._modelAtivo.getByAssets(
       compraVenda.codAtivo
     );
     if (!encontrarAtivo) {
-      throw new HttpException(401, 'Este Ativo não existe.');
+      throw new ErroHttp(401, 'Este Ativo não existe.');
     }
     if (encontrarAtivo.qtdeAtivo < qtdeAtivo) {
-      throw new HttpException(
+      throw new ErroHttp(
         400,
         'Essa quantidade é maior que a quantidade disponível na corretora'
       );
@@ -42,7 +42,7 @@ export class CompraService {
       .then((cliente) => cliente?.saldo);
     const valorCompra = Number(encontrarAtivo.valorAtivo) * Number(qtdeAtivo);
     if (valorCompra > Number(saldoCliente)) {
-      throw new HttpException(400, 'Não há saldo disponível para esta compra.');
+      throw new ErroHttp(400, 'Não há saldo disponível para esta compra.');
     }
     const saldoAtual = Number(saldoCliente) - valorCompra;
     await this._modelCliente.updateSaldo(codCliente, saldoAtual);

@@ -10,8 +10,8 @@ export class CarteirasService {
     //throw error codAtivo nao existe.
   }
   async handleCarteira(
-    codAtivo: string,
-    codCliente: string,
+    codAtivo: number,
+    codCliente: number,
     qtdeAtivo: number
   ) {
     const getClienteCarteiraAtivo = await this._model.getClienteCarteiraAtivo(
@@ -22,6 +22,5 @@ export class CarteirasService {
     if (!getClienteCarteiraAtivo) {
       await this._model.create({ codAtivo, codCliente, qtdeAtivo });
     }
-    
   }
 }

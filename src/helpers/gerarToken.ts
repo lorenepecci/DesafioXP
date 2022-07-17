@@ -8,7 +8,7 @@ const jwsConfig: SignOptions = {
   expiresIn: '7d',
 };
 
-const generateToken = (dataUser: string) =>
+const gerarToken = (dataUser: string) =>
   jsonToken.sign({ dataUser }, TOKEN_SECRET, jwsConfig);
 
-export default generateToken;
+export default gerarToken;
