@@ -14,7 +14,7 @@ export class AtivosController {
 
   async getByAssets(req: Request, res: Response) {
     const { codAtivo } = req.params;
-    const getAtivo = await _service.getByAssets(codAtivo);
+    const getAtivo = await _service.getByAssets(Number(codAtivo));
     return res.status(200).json(getAtivo);
   }
 }

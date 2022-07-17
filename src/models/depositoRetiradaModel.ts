@@ -8,6 +8,8 @@ export class DepositoRetiradaModel {
     this._prisma = prisma;
   }
   async create(depositoRetirada: IDepositoRetirada) {
+    console.log(depositoRetirada, 'depppp', typeof depositoRetirada.valor);
+
     return this._prisma.depositoRetirada.create({
       data: depositoRetirada,
     });

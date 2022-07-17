@@ -1,19 +1,20 @@
 import { Router } from 'express';
 import { ClientesController } from '../controllers/clienteController';
-import { DepositoRetiradaController } from '../controllers/depositoRetiradaController';
+import { DepositoController } from '../controllers/depositoController';
+import { RetiradaController } from '../controllers/retiradaController';
 import { autenticarMiddleware } from '../middlewares/autenticar';
-import { validarDepositoRetirada } from '../middlewares/middlewareDepositoRetirada';
+import { middlewareDepositoRetirada } from '../middlewares/middlewareDepositoRetirada';
 
 const router = Router();
 router.post(
   '/deposito',
-  validarDepositoRetirada,
-  new DepositoRetiradaController(true).create
+  middlewareDepositoRetirada,
+  new DepositoController().create
 );
 router.post(
   '/saque',
-  validarDepositoRetirada,
-  new DepositoRetiradaController(false).create
+  middlewareDepositoRetirada,
+  new RetiradaController().create
 );
 router.get(
   '/:codCliente',

@@ -1,32 +1,33 @@
-import { NextFunction, Response } from 'express';
-import { ErroHttp } from '../helpers/erroHttp';
-const Joi = require('joi');
+import { NextFunction, Request, Response } from 'express';
+import Joi from 'joi';
 
-const Cliente = Joi.object({
-  codCliente: Joi.string().required(),
+const schema = Joi.object( {
   nome: Joi.string().min(3).required(),
-  email: Joi.string()
-    .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-    .required(),
+  email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
   senha: Joi.string().min(6).required(),
 });
 
-const validarCliente = (req: Request, res: Response, next: NextFunction) => {
-  const { error } = Cliente.validate(req.body);
+const middlewareCliente = (req: Request, res: Response, next: NextFunction) => {
+  const { error } = schema.validate(req.body);
   if (error) {
     const { type, message } = error.details[0];
     switch (type) {
       case 'any.required':
         return res.status(400).json({ message });
-
       case 'string.base':
         return res.status(422).json({ message });
-
+      case 'string.email':
+        return res.status(422).json({ message });
+      case 'string.min':
+        return res.status(422).json({ message });
       default:
-        throw new ErroHttp(500, 'Erro no corpo da requisição.');
+        return res
+          .status(500)
+          .json({ message: 'Erro no corpo da requisição.' });
     }
   }
   next();
 };
 
-export { validarCliente };
+export { middlewareCliente };
+

@@ -2,11 +2,11 @@ import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
 
 const schema = Joi.object({
-  codAtivo: Joi.string().required(),
+  codAtivo: Joi.number().integer().required(),
   qtdeAtivo: Joi.number().integer().min(1).required(),
 });
 
-const validarCompraVenda = (
+const middlewareCompraVenda = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -17,8 +17,6 @@ const validarCompraVenda = (
     switch (type) {
       case 'any.required':
         return res.status(400).json({ message });
-      case 'number.base':
-        return res.status(422).json({ message });
       case 'number.integer':
         return res.status(422).json({ message });
       case 'number.min':
@@ -32,4 +30,4 @@ const validarCompraVenda = (
   next();
 };
 
-export { validarCompraVenda };
+export { middlewareCompraVenda };

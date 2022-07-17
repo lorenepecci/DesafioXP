@@ -2,11 +2,15 @@ import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
 
 const schema = Joi.object({
-  codCliente: Joi.string().required(),
+  codCliente: Joi.number().integer().required(),
   valor: Joi.number().required(),
 });
 
-const validarDepositoRetirada = (req: Request, res: Response, next: NextFunction) => {
+const middlewareDepositoRetirada = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { error } = schema.validate(req.body);
   if (error) {
     const { type, message } = error.details[0];
@@ -15,13 +19,15 @@ const validarDepositoRetirada = (req: Request, res: Response, next: NextFunction
         return res.status(400).json({ message });
       case 'number.base':
         return res.status( 422 ).json( { message } );
-      case 'string.base':
+      case 'number.integer':
         return res.status(422).json({ message });
       default:
-        break;
+        return res
+          .status(500)
+          .json({ message: 'Erro no corpo da requisição.' });
     }
   }
   next();
 };
 
-export { validarDepositoRetirada };
+export { middlewareDepositoRetirada };
