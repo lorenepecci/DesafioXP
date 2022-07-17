@@ -9,14 +9,19 @@ export class CompraController {
     const clienteLogado = JSON.parse(res.locals.payload.dataUser);
     const codClienteLogado = clienteLogado.codCliente;
     if (codCliente !== codClienteLogado) {
-      throw new ErroHttp(400, 'Ação nao permitida. Código do usuário incorreto.');
+      throw new ErroHttp(
+        400,
+        'Ação nao permitida. Código do usuário incorreto.'
+      );
     }
     const compraCriada = await _service.create({
-      codAtivo, 
+      codAtivo,
       qtdeAtivo,
       tipoCompra: true,
       codCliente,
     });
-    return res.status(200).json(compraCriada);
+    if (compraCriada) {
+      return res.status(200).json('Compra feita com sucesso.');
+    }
   }
 }

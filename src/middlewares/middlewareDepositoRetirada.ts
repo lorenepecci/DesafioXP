@@ -3,7 +3,7 @@ import Joi from 'joi';
 
 const schema = Joi.object({
   codCliente: Joi.number().integer().required(),
-  valor: Joi.number().required(),
+  valor: Joi.number().min(1).required(),
 });
 
 const middlewareDepositoRetirada = (
@@ -18,8 +18,10 @@ const middlewareDepositoRetirada = (
       case 'any.required':
         return res.status(400).json({ message });
       case 'number.base':
-        return res.status( 422 ).json( { message } );
+        return res.status(422).json({ message });
       case 'number.integer':
+        return res.status(422).json({ message });
+      case 'number.min':
         return res.status(422).json({ message });
       default:
         return res

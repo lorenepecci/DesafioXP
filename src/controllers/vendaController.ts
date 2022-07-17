@@ -19,7 +19,10 @@ export class VendaController {
       qtdeAtivo,
       tipoCompra: false,
       codCliente,
-    });
-    return res.status(200).json(vendaCriada);
+    } );
+    if ( vendaCriada ) {
+      return res.status(200).json('Venda feita com sucesso.');
+    }
+
   }
 }

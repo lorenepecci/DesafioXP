@@ -12,6 +12,8 @@ export class DepositoController {
       valor,
     });
 
-    return res.status(200).json(criadoDeposito);
+    if (criadoDeposito) {
+      return res.status(200).json('Depósito feito com sucesso.');
+    }
   }
 }
