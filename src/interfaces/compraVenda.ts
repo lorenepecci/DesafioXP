@@ -6,6 +6,6 @@ export interface ICompraVenda {
   codAtivo: number;
   qtdeAtivo: number;
   tipoCompra: boolean;
-  createdAt?: Date;
+  data?: Date;
   valor: Decimal;
 }

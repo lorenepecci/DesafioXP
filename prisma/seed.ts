@@ -64,7 +64,7 @@ async function main() {
         codAtivo: 1,
         qtdeAtivo: 3,
         tipoCompra: true,
-        createdAt: new Date(),
+        data: new Date(),
         valor: 2.5,
       },
       {
@@ -73,7 +73,7 @@ async function main() {
         codAtivo: 1,
         qtdeAtivo: 1,
         tipoCompra: false,
-        createdAt: new Date(),
+        data: new Date(),
         valor: 2.5,
       },
       {
@@ -82,7 +82,7 @@ async function main() {
         codAtivo: 2,
         qtdeAtivo: 4,
         tipoCompra: true,
-        createdAt: new Date(),
+        data: new Date(),
         valor: 5.5,
       },
     ],
@@ -108,13 +108,13 @@ async function main() {
       {
         codCliente: 1,
         tipoDeposito: true,
-        createdAt: new Date(),
+        data: new Date(),
         valor: 1.0,
       },
       {
         codCliente: 1,
         tipoDeposito: false,
-        createdAt: new Date(),
+        data: new Date(),
         valor: 1.0,
       },
     ],

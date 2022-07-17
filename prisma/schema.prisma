@@ -57,7 +57,7 @@ model CompraVenda {
   qtdeAtivo  Int
   valor Decimal 
   tipoCompra Boolean  
-  createdAt   DateTime  @default(now())
+  data   DateTime  @default(now())
 
   @@map("compraVenda")
 }
@@ -69,7 +69,7 @@ model DepositoRetirada {
 
   valor Decimal
   tipoDeposito Boolean  
-  createdAt   DateTime  @default(now())
+  data  DateTime  @default(now())
 
   @@map("depositoRetirada")
 }
