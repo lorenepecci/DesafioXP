@@ -11,7 +11,7 @@ export class CompraService {
   private _model: CompraVendaModel;
   private _modelAtivo: AtivosModel;
   private _serviceCarteira: CarteirasService;
-  private _modelCliente: ClientesModel;
+  private _modelCliente: ClientesModel; 
   constructor(
     model = new CompraVendaModel(),
     ativo = new AtivosModel(),
@@ -23,10 +23,11 @@ export class CompraService {
     this._serviceCarteira = carteira;
     this._modelCliente = cliente;
   }
-  async create(compraVenda: Omit<ICompraVenda, 'valor'>) {
-    const { codCliente, codAtivo, qtdeAtivo, tipoCompra } = compraVenda;
-    const encontrarAtivo = await this._modelAtivo.getByAssets(
-      compraVenda.codAtivo
+  async create(compra: Omit<ICompraVenda, 'valor'>) {
+    const { codCliente, codAtivo, qtdeAtivo, tipoCompra} = compra;
+    const encontrarAtivo = await this._modelAtivo.getByAssets(compra.codAtivo);
+    const encontrarCliente = await this._modelCliente.getByClienteCod(
+      codCliente
     );
     if (!encontrarAtivo) {
       throw new ErroHttp(401, 'Este Ativo não existe.');
@@ -37,21 +38,22 @@ export class CompraService {
         'Essa quantidade é maior que a quantidade disponível na corretora'
       );
     }
-    const saldoCliente = await this._modelCliente
-      .getByClienteCod(codCliente)
-      .then((cliente) => cliente?.saldo);
+    const saldoCliente = encontrarCliente?.saldo;
     const valorCompra = Number(encontrarAtivo.valorAtivo) * Number(qtdeAtivo);
     if (valorCompra > Number(saldoCliente)) {
       throw new ErroHttp(400, 'Não há saldo disponível para esta compra.');
     }
     const saldoAtual = Number(saldoCliente) - valorCompra;
     await this._modelCliente.updateSaldo(codCliente, saldoAtual);
-    // adicionar a carteira ou update ou create.
-    await this._serviceCarteira.handleCarteira(codAtivo, codCliente, qtdeAtivo);
-    const quantidadeAtual = Number(encontrarAtivo.qtdeAtivo) - qtdeAtivo;
-    await this._modelAtivo.updateQuantidadeAtivo(codAtivo, quantidadeAtual);
+
+    await this._serviceCarteira.handleCarteira(tipoCompra, codAtivo, codCliente, qtdeAtivo);
+    const quantidadeAtualAtivo = Number(encontrarAtivo.qtdeAtivo) - qtdeAtivo;
+    await this._modelAtivo.updateQuantidadeAtivo(
+      codAtivo,
+      quantidadeAtualAtivo
+    );
     return await this._model.create({
-      ...compraVenda,
+      ...compra,
       valor: new Decimal(encontrarAtivo.valorAtivo),
     });
   }

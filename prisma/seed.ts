@@ -1,13 +1,14 @@
 import { PrismaClient } from '@prisma/client';
+import { hash } from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.ativo.deleteMany({});
+  await prisma.depositoRetirada.deleteMany({});
+  await prisma.compraVenda.deleteMany({});
   await prisma.carteiraCliente.deleteMany({});
   await prisma.cliente.deleteMany({});
-  await prisma.compraVenda.deleteMany({});
-  await prisma.depositoRetirada.deleteMany({});
+  await prisma.ativo.deleteMany({});
 
   await prisma.ativo.createMany({
     data: [
@@ -34,21 +35,21 @@ async function main() {
       {
         codCliente: 1,
         nome: 'fulano1',
-        senha: '12345678',
+        senha: await hash('12345678', 8),
         email: 'fulano1@gmail.com',
         saldo: 300.0,
       },
       {
         codCliente: 2,
         nome: 'fulano2',
-        senha: '22345678',
+        senha: await hash('22345678', 8),
         email: 'fulano2@gmail.com',
         saldo: 200.0,
       },
       {
         codCliente: 3,
         nome: 'fulano3',
-        senha: '32345678',
+        senha: await hash('32345678', 8),
         email: 'fulano3@gmail.com',
         saldo: 400.0,
       },
