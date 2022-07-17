@@ -40,4 +40,19 @@ export class CarteirasModel {
       },
     });
   }
+  async getClienteCarteira(codCliente: number) {
+    return this._prisma.carteiraCliente.findMany({
+      where: {
+        codCliente,
+      },
+      orderBy: {
+        qtdeAtivo: 'desc',
+      },
+      select: {
+        codCliente: true,
+        codAtivo: true,
+        qtdeAtivo: true,
+      },
+    });
+  }
 }

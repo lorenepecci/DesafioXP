@@ -25,13 +25,16 @@ export class DepositoService {
     const saldoCliente = await this._modelCliente
       .getByClienteCod(codCliente)
       .then((cliente) => cliente?.saldo);
-    console.log(codCliente, codClienteLogado);
+
     if (codClienteLogado !== codCliente) {
       if (Number(valor) > Number(saldoClienteLogado)) {
         throw new ErroHttp(
           400,
           `Você não tem saldo disponível. Seu saldo é de ${saldoClienteLogado}`
         );
+      }
+      if (!saldoCliente) {
+        throw new ErroHttp(400, 'Esse cliente não existe.');
       }
       const saldoNovoClienteLogado = Number(saldoClienteLogado) - Number(valor);
       const saldoNovoCliente = Number(saldoCliente) + Number(valor);

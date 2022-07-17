@@ -1,4 +1,5 @@
 import 'express-async-errors';
+import { ErroHttp } from '../helpers/erroHttp';
 import { IAtivo } from '../interfaces/ativos';
 import { AtivosModel } from '../models/ativosModel';
 
@@ -12,6 +13,8 @@ export class AtivosService {
   }
 
   async getByAssets(codAtivo: number) {
-    return await this._model.getByAssets(codAtivo);
+    const getAtivo = await this._model.getByAssets(codAtivo);
+    if (!getAtivo) throw new ErroHttp(400, 'Esse ativo não existe. ');
+    return getAtivo;
   }
 }

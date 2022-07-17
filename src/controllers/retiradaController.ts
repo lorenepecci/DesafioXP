@@ -8,7 +8,7 @@ export class RetiradaController {
     const { codCliente, valor } = req.body;
     const clienteLogado = JSON.parse(res.locals.payload.dataUser);
     if ( clienteLogado.codCliente !== codCliente ) {
-      throw new ErroHttp(400, "Conta inválida para saque.")
+      throw new ErroHttp(400, "Conta inválida.")
     }
     const criadoRetirada = await _service.create({
       codCliente,

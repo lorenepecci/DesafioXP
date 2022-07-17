@@ -1,10 +1,24 @@
 import 'express-async-errors';
+import { AtivosModel } from '../models/ativosModel';
 import { CarteirasModel } from './../models/carteirasModel';
 
 export class CarteirasService {
   private _model: CarteirasModel;
-  constructor(model = new CarteirasModel()) {
+  private _modelAtivo: AtivosModel;
+  constructor(model = new CarteirasModel(), ativos = new AtivosModel()) {
     this._model = model;
+    this._modelAtivo = ativos;
+  }
+  async getClienteCarteira(codCliente: number) {
+    const carteira = await this._model.getClienteCarteira(codCliente);
+    const response = carteira.map(async (ativo) => {
+      const objAtivo = await this._modelAtivo.getByAssets(ativo.codAtivo);
+
+      const valor = objAtivo?.valorAtivo;
+      return { ...ativo, valor };
+    });
+    const resposta = await Promise.all(response);
+    return resposta;
   }
 
   async getClienteCarteiraAtivo(codAtivo: number, codCliente: number) {
