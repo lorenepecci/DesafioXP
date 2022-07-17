@@ -12,9 +12,9 @@ const autenticarMiddleware = async (
     return res.status(err.status).json({ message: err.message });
   }
   try {
-    const payload = await autenticarToken(token);
+    const payload = autenticarToken(token);
     res.locals.payload = payload;
-  } catch (err) {
+  } catch {
     return res.status(401).json({ message: 'Token inválido.' });
   }
 
