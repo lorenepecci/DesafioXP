@@ -1,7 +1,7 @@
 setup:
   addons:
-    - plan: cleardb:ignite
-      as: DATABASE
+    plan: cleardb:ignite
+    as: DATABASE
 build:
   docker:
     web: Dockerfile

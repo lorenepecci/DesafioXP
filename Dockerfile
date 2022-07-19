@@ -17,7 +17,7 @@ RUN npm run predev
 
 CMD ["npm", "run", "dev"]
 
-FROM node:16-alpine as builder
+FROM node:16-alpine AS builder
 
 WORKDIR /app/back
 
@@ -27,7 +27,7 @@ RUN npm install
 
 COPY . /app/back/
 
-EXPOSE 3001
+EXPOSE ${PORT}
 
 ARG JWT_SECRET
 ARG DATABASE_URL
