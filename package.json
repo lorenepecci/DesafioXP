@@ -9,7 +9,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsnd --transpile-only --exit-child src/server.ts",
-    "predev": "prisma migrate dev && prisma db seed"
+    "predev": "prisma migrate dev && prisma db seed",
+    "build": "prisma generate && tsc",
+    "start": "node dist/server.js"
   },
   "repository": {
     "type": "git",
