@@ -8,12 +8,12 @@ RUN npm install
 
 COPY . /app/back/
 
-EXPOSE ${PORT}
+EXPOSE 3001
 
 ARG JWT_SECRET
 ARG DATABASE_URL
 
-RUN npm run build
+RUN npm run predev
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
 

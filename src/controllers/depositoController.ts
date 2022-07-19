@@ -13,7 +13,7 @@ export class DepositoController {
     });
 
     if (criadoDeposito) {
-      return res.status(200).json('Depósito feito com sucesso.');
+      return res.status( 200 ).json( { message: 'Depósito feito com sucesso.', ...criadoDeposito });
     }
   }
 }

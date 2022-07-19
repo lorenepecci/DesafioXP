@@ -16,7 +16,7 @@ export class RetiradaController {
     });
 
     if (criadoRetirada) {
-      return res.status(200).json('Saque feito com sucesso.');
+      return res.status( 200 ).json( { message: 'Saque feito com sucesso.', ...criadoRetirada});
     }
   }
 }

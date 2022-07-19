@@ -21,7 +21,7 @@ export class VendaController {
       codCliente,
     } );
     if ( vendaCriada ) {
-      return res.status(200).json('Venda feita com sucesso.');
+      return res.status( 200 ).json( { message: 'Venda feita com sucesso.', ...vendaCriada });
     }
 
   }

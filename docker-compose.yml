@@ -3,6 +3,8 @@ services:
   backend:
     build: .
     container_name: 'api_backend'
+    command: npm run dev
+    restart: always
     platform: linux/amd64
     volumes:
       - ./:/app/back
@@ -21,6 +23,7 @@ services:
       - DB_NAME=${DB_NAME}
       - DB_PORT=${DB_PORT}
       - DATABASE_URL=mysql://root:${DB_PASSWORD}@mysql:${DB_PORT}/${DB_NAME}
+      - JWT_SECRET=${JWT_SECRET}
     healthcheck:
       test: ['CMD', 'lsof', '-t', '-i:3001']
       timeout: 15s

@@ -18,7 +18,6 @@ router.post(
 );
 router.get(
   '/:codCliente',
-  autenticarMiddleware,
   new ClientesController().getSaldoCliente
 );
 

@@ -19,7 +19,7 @@ export class LoginService {
       );
       if (descriptografarSenhaBD) {
         const token = gerarToken(JSON.stringify(getCliente));
-        return { token };
+        return { token, codCliente: getCliente.codCliente };
       }
     }
 

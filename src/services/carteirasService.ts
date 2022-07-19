@@ -15,7 +15,7 @@ export class CarteirasService {
       const objAtivo = await this._modelAtivo.getByAssets(ativo.codAtivo);
 
       const valor = objAtivo?.valorAtivo;
-      return { ...ativo, valor };
+      return { ...ativo, valor: Number(valor) };
     });
     const resposta = await Promise.all(response);
     return resposta;

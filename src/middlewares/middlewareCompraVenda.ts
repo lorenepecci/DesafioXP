@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
 
 const schema = Joi.object({
+  codCliente: Joi.number().integer().required(),
   codAtivo: Joi.number().integer().required(),
   qtdeAtivo: Joi.number().integer().min(1).required(),
 });

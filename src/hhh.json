@@ -1,0 +1,59 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Extratos",
+    "description": "API de Extratos da Conta Internacional",
+    "contact": {
+      "name": "Claudio Massumi Kawano",
+      "email": "claudio.kawano@bs2.com"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/conta-internacional/extratos/clientes/{customerId}": {
+      "get": {
+        "tags": ["Extratos"],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorsModel"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatementModel"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "basic": []
+          }
+        ]
+      }
+    }
+  }
+}

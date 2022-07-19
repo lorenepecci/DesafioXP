@@ -21,7 +21,7 @@ export class CompraController {
       codCliente,
     });
     if (compraCriada) {
-      return res.status(200).json('Compra feita com sucesso.');
+      return res.status( 200 ).json( { message:'Compra feita com sucesso.', ...compraCriada});
     }
   }
 }

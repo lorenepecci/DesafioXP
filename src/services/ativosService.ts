@@ -15,6 +15,7 @@ export class AtivosService {
   async getByAssets(codAtivo: number) {
     const getAtivo = await this._model.getByAssets(codAtivo);
     if (!getAtivo) throw new ErroHttp(400, 'Esse ativo não existe. ');
-    return getAtivo;
+    const { qtdeAtivo, valorAtivo } = getAtivo;
+    return { codAtivo, qtdeAtivo, valor: Number(valorAtivo) };
   }
 }
