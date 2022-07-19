@@ -1,63 +1,205 @@
-
 {
-  "swagger": "2.0",
+  "openapi": "3.0.1",
   "info": {
-      "description": "Este é um projeto do processo seletivo da XP ",
-      "version": "1.0.0",
-      "title": "Investimentos API",
-      "contact": {
-          "email": "abc@gmail.com"
-      },
-      "license": {
-          "name": "Apache 2.0",
-          "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-      }
+    "description": "Este é um projeto do processo seletivo da XP ",
+    "version": "1.0.0",
+    "title": "Investimentos API",
+    "contact": {
+      "email": "lorenepecci@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
   },
   "schemes": ["http"],
   "host": "localhost:3001",
   "basePath": "/",
-  "paths" : {
-      "/ativos/{codAtivo}" : {
-          "get" : {
-              "summary" : "Get ativo",
-              "description": "Get ativo",
-              "produces": ["application/json"],
-              "parameters": [ {
-                "name": "codAtivo",
-                "in": "query",
-                "description": "get codAtivo",
-                "required": true,
-                "type": "integer"
-            }],
-              "responses": {
-                  "200": {
-                      "description": "successful operation",
-                      "schema": {
-                          "type": "object",
-                          "items": {
-                              "$ref": "#/definitions/ativo"
-                          }
-                      }
-                  }
-              }
-          }
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
-  }, 
+    }
+  },
+  "paths": {
+    "/ativos/{codAtivo}": {
+      "get": {
+        "summary": "Get ativo",
+        "description": "Get ativo",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "codAtivo",
+            "in": "query",
+            "description": "get codAtivo",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ativo"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clientes": {
+      "post": {
+        "summary": "Criar Cliente",
+        "description": "Criar cliente - retorna dados cliente",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "clienteData",
+            "in": "body",
+            "description": "criar cliente com nome, email, senha.",
+            "schema": {
+              "$ref": "#/definitions/cliente"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sucesso!",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/clienteCliado"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "summary": "Login Cliente",
+        "description": "Login do cliente - retorna token",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "loginData",
+            "in": "body",
+            "description": "fazer login com email e senha.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sucesso!",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/token"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "definitions": {
-      "ativo": {
-          "type": "object",
-          "properties": {
-              "codAtivo": {
-                   "type": "integer"
-              },
-              "qtdeAtivo": {
-                  "type": "integer"
-              },
-              "valorAtivo": {
-                  "type": "double"
-              }
-          }
+    "ativo": {
+      "type": "object",
+      "properties": {
+        "codAtivo": {
+          "type": "integer"
+        },
+        "qtdeAtivo": {
+          "type": "integer"
+        },
+        "valorAtivo": {
+          "type": "double"
+        }
       }
-      
+    },
+    "cliente": {
+      "type": "object",
+      "required": ["email", "senha", "nome"],
+      "properties": {
+        "nome": {
+          "type": "string"
+        },
+        "senha": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "nome": "fulano1",
+        "senha": "12345678",
+        "email": "fulano1@gmail.com"
+      }
+    },
+    "clienteCriado": {
+      "type": "object",
+      "properties": {
+        "codCliente": {
+          "type": "number"
+        },
+        "nome": {
+          "type": "string"
+        },
+        "senha": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "saldo": {
+          "type": "number"
+        }
+      },
+      "example": {
+        "codCliente": 1,
+        "nome": "fulano1",
+        "senha": "$2a$08$486LWDJyZqEznxkr95SeHeczCck2/MBiAl2rWYoeBPmx1/Lj94idS",
+        "email": "fulano1@gmail.com",
+        "saldo": "0"
+      }
+    },
+    "login": {
+      "type": "object",
+      "required": ["email", "senha"],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "senha": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "email": "fulano1@gmail.com",
+        "senha": "12345678"
+      }
+    },
+    "token": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    }
   }
 }

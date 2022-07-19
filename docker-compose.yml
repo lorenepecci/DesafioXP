@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  backend:
+    build: .
+    container_name: 'api_backend'
+    command: npm run dev
+    platform: linux/amd64
+    volumes:
+      - ./:/app/back
+    ports:
+      - 3001:3001
+    tty: true
+    stdin_open: true
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      - PORT=3001
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=db
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=${DB_PORT}
+      - DATABASE_URL=mysql://root:${DB_PASSWORD}@mysql:${DB_PORT}/${DB_NAME}
+    healthcheck:
+      test: ['CMD', 'lsof', '-t', '-i:3001']
+      timeout: 15s
+      retries: 5
+
+  mysql:
+    image: mysql:8.0.21
+    platform: linux/amd64
+    container_name: 'banco_dados'
+    ports:
+      - ${DB_PORT}:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+    restart: always
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      timeout: 10s
+      retries: 5
+    cap_add:
+      - SYS_NICE
