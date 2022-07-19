@@ -48,7 +48,12 @@ export class VendaService {
     const saldoAtual = Number(saldoCliente) + valorVenda;
     await this._modelCliente.updateSaldo(codCliente, saldoAtual);
 
-    await this._serviceCarteira.handleCarteira(tipoCompra, codAtivo, codCliente, qtdeAtivo);
+    await this._serviceCarteira.handleCarteira(
+      tipoCompra,
+      codAtivo,
+      codCliente,
+      qtdeAtivo
+    );
     const quantidadeAtualAtivo = Number(encontrarAtivo.qtdeAtivo) + qtdeAtivo;
     await this._modelAtivo.updateQuantidadeAtivo(
       codAtivo,
