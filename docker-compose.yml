@@ -3,19 +3,18 @@ services:
   backend:
     build: .
     container_name: 'api_backend'
-    command: npm run dev
     platform: linux/amd64
     volumes:
       - ./:/app/back
     ports:
-      - 3001:3001
+      - 3001:${PORT}
     tty: true
     stdin_open: true
     depends_on:
       mysql:
         condition: service_healthy
     environment:
-      - PORT=3001
+      - PORT=${PORT}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_HOST=db
