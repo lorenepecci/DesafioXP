@@ -3,6 +3,7 @@ services:
   backend:
     build: .
     container_name: 'api_backend'
+    command: npm run dev 
     platform: linux/amd64
     volumes:
       - ./:/app/back
