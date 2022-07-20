@@ -6,6 +6,6 @@ export class LoginController {
   async create(req: Request, res: Response) {
     const { email, senha } = req.body;
     const token = await _service.create({ email, senha });
-    return res.status(200).json(token);
+    return res.status(200).json(token); 
   }
 }

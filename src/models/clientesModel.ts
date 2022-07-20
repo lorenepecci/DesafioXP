@@ -3,7 +3,7 @@ import { Decimal } from '@prisma/client/runtime';
 import { ICliente } from '../interfaces/clientes';
 
 export class ClientesModel {
-  private _prisma: PrismaClient;
+  private _prisma: PrismaClient; 
 
   constructor(prisma = new PrismaClient()) {
     this._prisma = prisma;

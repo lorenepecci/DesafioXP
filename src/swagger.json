@@ -25,6 +25,62 @@
     }
   },
   "paths": {
+    "/clientes": {
+      "post": {
+        "summary": "Criar Cliente",
+        "description": "Criar cliente - retorna dados cliente",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/cliente"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "sucesso!",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/clienteCriado"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "summary": "Login Cliente",
+        "description": "Login do cliente - retorna token",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "sucesso!",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/token"
+              }
+            }
+          }
+        }
+      }
+    },
     "/ativos": {
       "get": {
         "summary": "Get ativo",
@@ -39,7 +95,6 @@
             }
           }
         ],
-
         "responses": {
           "200": {
             "description": "successful operation",
@@ -52,60 +107,33 @@
             }
           }
         }
-      }
-    },
-    "/clientes": {
+      },
       "post": {
-        "summary": "Criar Cliente",
-        "description": "Criar cliente - retorna dados cliente",
+        "summary": "Criar ativo",
+        "description": "Criar ativo - retorna dados ativo",
         "produces": ["application/json"],
         "consumes": ["application/json"],
-        "parameters": [
+        "security": [
           {
-            "in": "body",
-            "name": "body",
-            "description": "cliente object",
-            "schema": {
-              "$ref": "#/definitions/cliente"
-            }
+            "bearerAuth": []
           }
         ],
-        "responses": {
-          "200": {
-            "description": "sucesso!",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/clienteCliado"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/ativoBody"
               }
             }
           }
-        }
-      }
-    },
-    "/login": {
-      "post": {
-        "summary": "Login Cliente",
-        "description": "Login do cliente - retorna token",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "loginData",
-            "in": "body",
-            "description": "fazer login com email e senha.",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/login"
-            }
-          }
-        ],
+        },
         "responses": {
           "200": {
             "description": "sucesso!",
             "schema": {
               "type": "object",
               "items": {
-                "$ref": "#/definitions/token"
+                "$ref": "#/definitions/ativo"
               }
             }
           }
@@ -126,6 +154,21 @@
         "valorAtivo": {
           "type": "double"
         }
+      }
+    },
+    "ativoBody": {
+      "type": "object",
+      "properties": {
+        "qtdeAtivo": {
+          "type": "integer"
+        },
+        "valorAtivo": {
+          "type": "double"
+        }
+      },
+      "example": {
+        "qtdeAtivo": 60,
+        "valorAtivo": 20.5
       }
     },
     "cliente": {

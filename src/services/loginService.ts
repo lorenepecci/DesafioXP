@@ -15,7 +15,7 @@ export class LoginService {
     if (getCliente) {
       const descriptografarSenhaBD = await CriptografarSenhas.comparar(
         cliente.senha,
-        getCliente.senha
+        getCliente.senha 
       );
       if (descriptografarSenhaBD) {
         const token = gerarToken(JSON.stringify(getCliente));

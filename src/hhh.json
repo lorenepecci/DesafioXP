@@ -5,7 +5,7 @@
     "description": "API de Extratos da Conta Internacional",
     "contact": {
       "name": "Claudio Massumi Kawano",
-      "email": "claudio.kawano@bs2.com"
+      "email": "claudio.kawano@bs2.com" 
     },
     "version": "v1"
   },
