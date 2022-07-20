@@ -35,7 +35,7 @@ export class RetiradaService {
     const depositoRetiradaCriar = {
       codCliente,
       tipoDeposito: false,
-      valor: new Decimal(valor),
+      valor,
     };
 
     return this._model.create(depositoRetiradaCriar);

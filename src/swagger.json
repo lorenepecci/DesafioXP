@@ -83,12 +83,19 @@
     },
     "/ativos": {
       "get": {
-        "summary": "Get ativo",
-        "description": "Get ativo",
+        "summary": "Get ativo ou  carteira",
+        "description": "Get ativo ou carteira",
         "produces": ["application/json"],
         "parameters": [
           {
             "name": "codAtivo",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "codCliente",
             "in": "query",
             "schema": {
               "type": "integer"
@@ -101,13 +108,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/definitions/ativo"
+                  "oneOf": [
+                    { "$ref": "#/definitions/ativo" },
+                    { "$ref": "#/definitions/carteira" }
+                  ]
                 }
               }
             }
           }
         }
       },
+
       "post": {
         "summary": "Criar ativo",
         "description": "Criar ativo - retorna dados ativo",
@@ -139,38 +150,174 @@
           }
         }
       }
+    },
+    "/conta/deposito": {
+      "post": {
+        "summary": "Criar deposito",
+        "description": "Criar deposito - retorna dados deposito",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/depositoRetirada"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "sucesso!",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/depositoCriado"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conta/saque": {
+      "post": {
+        "summary": "Criar retirada",
+        "description": "Criar retirada - retorna dados retirada",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/depositoRetirada"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "sucesso!",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/retiradaCriada"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conta/{codCliente}": {
+      "get": {
+        "summary": "Get conta",
+        "description": "Get conta",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "codCliente",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/conta"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/investimentos/comprar": {
+      "post": {
+        "summary": "Criar compra",
+        "description": "Criar compra - retorna dados compra",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/compraVenda"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "sucesso!",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/compraCriada"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/investimentos/vender": {
+      "post": {
+        "summary": "Criar venda",
+        "description": "Criar venda - retorna dados venda",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/compraVenda"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "sucesso!",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/vendaCriada"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
-    "ativo": {
-      "type": "object",
-      "properties": {
-        "codAtivo": {
-          "type": "integer"
-        },
-        "qtdeAtivo": {
-          "type": "integer"
-        },
-        "valorAtivo": {
-          "type": "double"
-        }
-      }
-    },
-    "ativoBody": {
-      "type": "object",
-      "properties": {
-        "qtdeAtivo": {
-          "type": "integer"
-        },
-        "valorAtivo": {
-          "type": "double"
-        }
-      },
-      "example": {
-        "qtdeAtivo": 60,
-        "valorAtivo": 20.5
-      }
-    },
     "cliente": {
       "type": "object",
       "required": ["email", "senha", "nome"],
@@ -186,9 +333,9 @@
         }
       },
       "example": {
-        "nome": "fulano1",
-        "senha": "12345678",
-        "email": "fulano1@gmail.com"
+        "nome": "fulano4",
+        "senha": "42345678",
+        "email": "fulano4@gmail.com"
       }
     },
     "clienteCriado": {
@@ -230,8 +377,8 @@
         }
       },
       "example": {
-        "email": "fulano1@gmail.com",
-        "senha": "12345678"
+        "email": "fulano4@gmail.com",
+        "senha": "42345678"
       }
     },
     "token": {
@@ -241,6 +388,173 @@
           "type": "string"
         }
       }
+    },
+    "ativo": {
+      "type": "object",
+      "properties": {
+        "codAtivo": {
+          "type": "integer"
+        },
+        "qtdeAtivo": {
+          "type": "integer"
+        },
+        "valorAtivo": {
+          "type": "double"
+        }
+      }
+    },
+    "ativoBody": {
+      "type": "object",
+      "properties": {
+        "qtdeAtivo": {
+          "type": "integer"
+        },
+        "valorAtivo": {
+          "type": "double"
+        }
+      },
+      "example": {
+        "qtdeAtivo": 60,
+        "valorAtivo": 20.5
+      }
+    },
+    "depositoRetirada": {
+      "type": "object",
+      "properties": {
+        "codCliente": "integer",
+        "valor": "decimal"
+      },
+      "example": {
+        "codCliente": 1,
+        "valor": 99.99
+      }
+    },
+    "depositoCriado": {
+      "type": "object",
+      "properties": {
+        "message": "string",
+        "id": "integer",
+        "codCliente": "integer",
+        "valor": "string",
+        "tipoDeposito": "boolean",
+        "data": "string"
+      },
+      "example": {
+        "message": "Depósito feito com sucesso.",
+        "id": 13,
+        "codCliente": 1,
+        "valor": "99.98999999999999",
+        "tipoDeposito": true,
+        "data": "2022-07-20T18:08:54.203Z"
+      }
+    },
+    "retiradaCriada": {
+      "type": "object",
+      "properties": {
+        "message": "string",
+        "id": "integer",
+        "codCliente": "integer",
+        "valor": "string",
+        "tipoDeposito": "boolean",
+        "data": "string"
+      },
+      "example": {
+        "message": "Saque feito com sucesso.",
+        "id": 14,
+        "codCliente": 1,
+        "valor": "99.98999999999999",
+        "tipoDeposito": false,
+        "data": "2022-07-20T18:19:01.745Z"
+      }
+    },
+    "compraVenda": {
+      "type": "object",
+      "properties": {
+        "codCliente": "integer",
+        "codAtivo": "integer",
+        "qtdeAtivo": "integer"
+      },
+      "example": {
+        "codCliente": 1,
+        "codAtivo": 2,
+        "qtdeAtivo": 10
+      }
+    },
+    "compraCriada": {
+      "type": "object",
+      "properties": {
+        "message": "string",
+        "id": "integer",
+        "codCliente": "integer",
+        "codAtivo": "integer",
+        "qtdeAtivo": "integer",
+        "valor": "string",
+        "tipoCompra": "boolean",
+        "data": "string"
+      },
+      "example": {
+        "message": "Compra feita com sucesso.",
+        "id": 9,
+        "codCliente": 1,
+        "codAtivo": 2,
+        "qtdeAtivo": 10,
+        "valor": "5.5",
+        "tipoCompra": true,
+        "data": "2022-07-20T18:27:43.305Z"
+      }
+    },
+    "vendaCriada": {
+      "type": "object",
+      "properties": {
+        "message": "string",
+        "id": "integer",
+        "codCliente": "integer",
+        "codAtivo": "integer",
+        "qtdeAtivo": "integer",
+        "valor": "string",
+        "tipoCompra": "boolean",
+        "data": "string"
+      },
+      "example": {
+        "message": "Venda feita com sucesso.",
+        "id": 10,
+        "codCliente": 1,
+        "codAtivo": 2,
+        "qtdeAtivo": 10,
+        "valor": "5.5",
+        "tipoCompra": false,
+        "data": "2022-07-20T18:32:16.883Z"
+      }
+    },
+    "conta": {
+      "type": "object",
+      "properties": {
+        "codCliente": "integer",
+        "saldo": "decimal"
+      },
+      "example": {
+        "codCliente": 1,
+        "saldo": 100.02
+      }
+    },
+    "carteira": {
+      "type": "array",
+      "properties": [
+        {
+          "codCliente": "integer",
+          "codAtivo": "integer",
+          "qtdeAtivo": "integer",
+          "valor": "decimal"
+        }
+      ],
+      "example": [
+        {
+          "codCliente": 1,
+          "codAtivo": 1,
+          "qtdeAtivo": 2,
+          "valor": 2.5
+        }
+      ]
     }
   }
 }

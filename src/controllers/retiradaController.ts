@@ -12,11 +12,14 @@ export class RetiradaController {
     }
     const criadoRetirada = await _service.create({
       codCliente,
+      tipoDeposito: false,
       valor,
     });
 
     if (criadoRetirada) {
-      return res.status( 200 ).json( { message: 'Saque feito com sucesso.', ...criadoRetirada});
+      return res
+        .status(200)
+        .json({ message: 'Saque feito com sucesso.', ...criadoRetirada });
     }
   }
 }

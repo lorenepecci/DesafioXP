@@ -9,6 +9,7 @@ export class DepositoController {
 
     const criadoDeposito = await _service.create(clienteLogado.codCliente, {
       codCliente,
+      tipoDeposito: true,
       valor,
     });
 
