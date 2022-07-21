@@ -86,6 +86,11 @@
         "summary": "Get ativo ou  carteira",
         "description": "Get ativo ou carteira",
         "produces": ["application/json"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "codAtivo",
