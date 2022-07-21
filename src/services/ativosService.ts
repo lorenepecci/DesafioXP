@@ -9,7 +9,12 @@ export class AtivosService {
     this._model = model;
   }
   async create(ativo: IAtivo) {
-    return await this._model.create(ativo);
+    const ativoCriado = await this._model.create(ativo);
+    return {
+      codAtivo: ativoCriado.codAtivo,
+      qtdeAtivo: ativoCriado.qtdeAtivo,
+      valor: Number(ativoCriado.valorAtivo),
+    };
   }
 
   async getByAssets(codAtivo: number) {
