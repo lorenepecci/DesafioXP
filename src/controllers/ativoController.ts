@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { ErroHttp } from '../helpers/erroHttp';
 import { AtivosService } from '../services/ativosService';
 import { CarteirasService } from '../services/carteirasService';
 
@@ -21,6 +22,14 @@ export class AtivosController {
       return res.status(200).json(getAtivo);
     }
     if (codCliente) {
+      const clienteLogado = JSON.parse(res.locals.payload.dataUser);
+      const codClienteLogado = clienteLogado.codCliente;
+      if (codCliente != codClienteLogado) {
+        throw new ErroHttp(
+          400,
+          'Ação nao permitida. Código do usuário incorreto.'
+        );
+      }
       const listaCarteira = await _serviceCarteira.getClienteCarteira(
         Number(codCliente)
       );

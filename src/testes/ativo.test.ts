@@ -50,8 +50,8 @@ describe('--- Testes na rota /ativos ---', () => {
           'valorAtivo',
           'qtdeComprada',
         ]);
-      } );
-      
+      });
+
       it('Erro se a query nao for um numero inteiro', async () => {
         const response = await request(app)
           .get('/ativos?codAtivo=string')
@@ -79,12 +79,17 @@ describe('--- Testes na rota /ativos ---', () => {
         ]);
       });
 
-      /* it('Deve ser possivel ver a Carteira de outro cliente', async () => {
-      
-      }); 
-      it('Erro se a query ndor um codCliente q nao existe', async () => {})
-    
-      */
+      it('Não deve ser possivel ver a Carteira de outro cliente', async () => {
+        const response = await request(app)
+          .get('/ativos?codCliente=3')
+          .set('Authorization', token);
+        expect(response.status).to.be.equal(400);
+        expect(response.body).to.be.an('object');
+        expect(response.body).to.have.key('message');
+        expect(response.body.message).to.be.equal(
+          'Ação nao permitida. Código do usuário incorreto.'
+        );
+      });
 
       it('Erro se a query nao for um numero inteiro', async () => {
         const response = await request(app)
