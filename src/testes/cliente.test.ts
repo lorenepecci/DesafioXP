@@ -84,44 +84,5 @@ describe('--- Testes na rota /clientes ---', () => {
     });
   });
 
-  describe('--- Método GET na rota /conta/:codCliente ---', () => {
-    let token: string;
-    before(async () => {
-      await request(app)
-        .post('/login')
-        .send({
-          email: 'fulano1@gmail.com',
-          senha: '12345678',
-        })
-        .expect(200)
-        .then((res) => {
-          token = res.body.token;
-        });
-    });
-
-    it('Deve ser possivel ver o saldo do cliente', async () => {
-      const response = await request(app)
-        .get('/conta/1')
-        .set('Authorization', token);
-      expect(response.status).to.be.equal(200);
-      expect(response.body).to.have.all.keys(['codCliente', 'saldo']);
-    });
-
-    it('Erro token incorreto', async () => {
-      const response = await request(app)
-        .get('/conta/1')
-        .set('Authorization', token + 'erro');
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.have.key('message');
-      expect(response.body.message).to.be.equal('Token inválido.');
-    } );
-    
-    it('Erro "Token não encontrado ', async () => {
-      const response = await request( app )
-        .get( '/conta/1' );
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.have.key('message');
-      expect(response.body.message).to.be.equal("Token não encontrado.");
-    });
-  });
+  
 });
