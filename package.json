@@ -7,7 +7,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require ts-node/register src/testes/**/*.test.ts --exit",
+    "test": "prisma db seed && mocha --require ts-node/register src/testes/**/*.test.ts --exit",
     "dev": "tsnd --transpile-only --exit-child src/server.ts",
     "predev": "prisma migrate dev && prisma db seed",
     "build": "prisma generate && tsc",
@@ -32,6 +32,7 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/mocha": "^9.1.1",
     "@types/node": "^18.0.4",
+    "@types/shelljs": "^0.8.11",
     "@types/sinon": "^10.0.13",
     "chai": "^4.3.6",
     "chai-http": "^4.3.0",
@@ -54,6 +55,7 @@
     "express-async-errors": "^3.1.1",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
+    "shelljs": "^0.8.5",
     "supertest": "^6.2.4",
     "swagger-jsdoc": "^6.2.1",
     "swagger-ui-express": "^4.5.0"
