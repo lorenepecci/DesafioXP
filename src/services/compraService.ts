@@ -11,7 +11,7 @@ export class CompraService {
   private _model: CompraVendaModel;
   private _modelAtivo: AtivosModel;
   private _serviceCarteira: CarteirasService;
-  private _modelCliente: ClientesModel; 
+  private _modelCliente: ClientesModel;
   constructor(
     model = new CompraVendaModel(),
     ativo = new AtivosModel(),
@@ -24,7 +24,7 @@ export class CompraService {
     this._modelCliente = cliente;
   }
   async create(compra: Omit<ICompraVenda, 'valor'>) {
-    const { codCliente, codAtivo, qtdeAtivo, tipoCompra} = compra;
+    const { codCliente, codAtivo, qtdeAtivo, tipoCompra } = compra;
     const encontrarAtivo = await this._modelAtivo.getByAssets(compra.codAtivo);
     const encontrarCliente = await this._modelCliente.getByClienteCod(
       codCliente
@@ -46,7 +46,12 @@ export class CompraService {
     const saldoAtual = Number(saldoCliente) - valorCompra;
     await this._modelCliente.updateSaldo(codCliente, saldoAtual);
 
-    await this._serviceCarteira.handleCarteira(tipoCompra, codAtivo, codCliente, qtdeAtivo);
+    await this._serviceCarteira.handleCarteira(
+      tipoCompra,
+      codAtivo,
+      codCliente,
+      qtdeAtivo
+    );
     const quantidadeAtualAtivo = Number(encontrarAtivo.qtdeAtivo) - qtdeAtivo;
     await this._modelAtivo.updateQuantidadeAtivo(
       codAtivo,

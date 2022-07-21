@@ -42,7 +42,7 @@ describe('--- Testes na rota /investimentos ---', () => {
         'codAtivo',
       ]);
       expect(response.body.tipoCompra).to.be.equal(true);
-      expect(response.body.message).to.be.equal("Compra feita com sucesso.");
+      expect(response.body.message).to.be.equal('Compra feita com sucesso.');
     });
 
     it('Erro token incorreto', async () => {
@@ -74,9 +74,29 @@ describe('--- Testes na rota /investimentos ---', () => {
       expect(response.body.message).to.be.equal(
         'Ação nao permitida. Código do usuário incorreto.'
       );
-    } );
-    
-    /* it('Não deve ser possivel fazer compras se nao há saldo suficiente', async () => {
+    });
+
+    it('Não deve ser possivel fazer compras se nao há saldo suficiente', async () => {
+      const response = await request(app)
+        .post('/investimentos/comprar')
+        .set('Authorization', token)
+        .send({
+          codCliente: 1,
+          codAtivo: 3,
+          qtdeAtivo: 29,
+        });
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.have.key('message');
+      expect(response.body.message).to.be.equal(
+        'Não há saldo disponível para esta compra.'
+      );
+    });
+
+    it('Não deve ser possivel fazer compras se nao há quantidade disponivel na corretora', async () => {
+      await request(app).post('/conta/deposito').send({
+        codCliente: 1,
+        valor: 1000,
+      });
       const response = await request(app)
         .post('/investimentos/comprar')
         .set('Authorization', token)
@@ -88,8 +108,22 @@ describe('--- Testes na rota /investimentos ---', () => {
       expect(response.status).to.be.equal(400);
       expect(response.body).to.have.key('message');
       expect(response.body.message).to.be.equal(
-        "Essa quantidade é maior que a quantidade disponível na corretora"
+        'Essa quantidade é maior que a quantidade disponível na corretora'
       );
-    }); */
+    });
+
+    it('Não deve ser possivel fazer compras se o codAtivo nao existe', async () => {
+      const response = await request(app)
+        .post('/investimentos/comprar')
+        .set('Authorization', token)
+        .send({
+          codCliente: 1,
+          codAtivo: -1,
+          qtdeAtivo: 29,
+        });
+      expect(response.status).to.be.equal(401);
+      expect(response.body).to.have.key('message');
+      expect(response.body.message).to.be.equal('Este Ativo não existe.');
+    });
   });
 });

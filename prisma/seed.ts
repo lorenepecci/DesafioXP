@@ -37,7 +37,7 @@ async function main() {
         nome: 'fulano1',
         senha: await hash('12345678', 8),
         email: 'fulano1@gmail.com',
-        saldo: 300.0,
+        saldo: 30.0,
       },
       {
         codCliente: 2,
