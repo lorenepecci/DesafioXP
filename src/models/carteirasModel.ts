@@ -40,6 +40,15 @@ export class CarteirasModel {
       },
     });
   }
+
+  async getCarteirasAtivo(codAtivo: number) {
+    return this._prisma.carteiraCliente.findMany({
+      where: {
+        codAtivo,
+      },
+    });
+  }
+
   async getClienteCarteira(codCliente: number) {
     return this._prisma.carteiraCliente.findMany({
       where: {

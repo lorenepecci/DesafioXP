@@ -11,14 +11,14 @@ export class CarteirasService {
   }
   async getClienteCarteira(codCliente: number) {
     const carteira = await this._model.getClienteCarteira(codCliente);
-    const response = carteira.map(async (ativo) => {
+    const carteiraValor = carteira.map(async (ativo) => {
       const objAtivo = await this._modelAtivo.getByAssets(ativo.codAtivo);
 
       const valor = objAtivo?.valorAtivo;
       return { ...ativo, valor: Number(valor) };
     });
-    const resposta = await Promise.all(response);
-    return resposta;
+    const listaResposta = await Promise.all(carteiraValor);
+    return listaResposta;
   }
 
   async getClienteCarteiraAtivo(codAtivo: number, codCliente: number) {

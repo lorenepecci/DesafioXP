@@ -11,6 +11,10 @@ export class AtivosModel {
     return this._prisma.ativo.create({ data: ativo });
   }
 
+  async getAtivosCorretora() {
+    return this._prisma.ativo.findMany();
+  }
+
   async getByAssets(codAtivo: number) {
     return this._prisma.ativo.findUnique({ where: { codAtivo } });
   }
