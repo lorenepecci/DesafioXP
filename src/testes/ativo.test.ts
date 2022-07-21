@@ -24,6 +24,82 @@ describe('--- Testes na rota /ativos ---', () => {
       });
   });
 
+  describe('--- Método GET na rota /ativos ---', () => {
+    describe('--- Método GET na rota /ativos/{codAtivo} ---', () => {
+      it('Deve ser possivel ver o Ativo ', async () => {
+        const response = await request(app)
+          .get('/ativos?codAtivo=1')
+          .set('Authorization', token);
+        expect(response.status).to.be.equal(200);
+        expect(response.body).to.be.an('object');
+        expect(response.body).to.have.all.keys([
+          'codAtivo',
+          'qtdeAtivo',
+          'valor',
+        ]);
+      });
+      it('Deve ser possivel ver todos ativos da Corretora', async () => {
+        const response = await request(app)
+          .get('/ativos?codAtivo=0')
+          .set('Authorization', token);
+        expect(response.status).to.be.equal(200);
+        expect(response.body).to.be.an('array');
+        expect(response.body[0]).to.have.all.keys([
+          'codAtivo',
+          'qtdeAtivo',
+          'valorAtivo',
+          'qtdeComprada',
+        ]);
+      } );
+      
+      it('Erro se a query nao for um numero inteiro', async () => {
+        const response = await request(app)
+          .get('/ativos?codAtivo=string')
+          .set('Authorization', token);
+        expect(response.status).to.be.equal(500);
+        expect(response.body).to.be.an('object');
+        expect(response.body).to.have.key('message');
+        expect(response.body.message).to.be.equal(
+          'Parâmetro deve ser um numero inteiro.'
+        );
+      });
+    });
+    describe('--- Método GET na rota /ativos/{codCliente} ---', () => {
+      it('Deve ser possivel ver a Carteira do cliente logado', async () => {
+        const response = await request(app)
+          .get('/ativos?codCliente=1')
+          .set('Authorization', token);
+        expect(response.status).to.be.equal(200);
+        expect(response.body).to.be.an('array');
+        expect(response.body[0]).to.have.all.keys([
+          'codCliente',
+          'codAtivo',
+          'qtdeAtivo',
+          'valor',
+        ]);
+      });
+
+      /* it('Deve ser possivel ver a Carteira de outro cliente', async () => {
+      
+      }); 
+      it('Erro se a query ndor um codCliente q nao existe', async () => {})
+    
+      */
+
+      it('Erro se a query nao for um numero inteiro', async () => {
+        const response = await request(app)
+          .get('/ativos?codCliente=string')
+          .set('Authorization', token);
+        expect(response.status).to.be.equal(500);
+        expect(response.body).to.be.an('object');
+        expect(response.body).to.have.key('message');
+        expect(response.body.message).to.be.equal(
+          'Parâmetro deve ser um numero inteiro.'
+        );
+      });
+    });
+  });
+
   describe('--- Método POST na rota /ativos ---', () => {
     it('Deve ser possivel cadastrar uma ação', async () => {
       const response = await request(app)
