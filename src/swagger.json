@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "description": "Este é um projeto do processo seletivo da XP ",
+    "description": "Este é dois projeto do processo seletivo da XP ",
     "version": "1.0.0",
     "title": "Investimentos API",
     "contact": {
