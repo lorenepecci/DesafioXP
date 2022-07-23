@@ -3,7 +3,7 @@ import { RelatorioController } from '../controllers/relatorioController';
 import { VendaController } from '../controllers/vendaController';
 import { middlewareCompraVenda } from '../middlewares/middlewareCompraVenda';
 import { middlewareQueryRelatorio } from '../middlewares/middlewareQueryRelatorio';
-import { CompraController } from './../controllers/compraController';
+import { CompraController } from '../controllers/compraController';
 
 const router = Router();
 const comprarController = new CompraController();

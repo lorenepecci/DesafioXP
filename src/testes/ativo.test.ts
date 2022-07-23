@@ -6,26 +6,25 @@ import { IAtivo } from '../interfaces/ativos';
 const { expect } = chai;
 
 describe('--- Testes na rota /ativos ---', () => {
-  let token: string;
-  let ativoCriado: IAtivo;
-  beforeEach(async () => {
-    ativoCriado = {
-      qtdeAtivo: 60,
-      valorAtivo: new Decimal(20.5),
-    };
-    await request(app)
-      .post('/login')
-      .send({
-        email: 'fulano1@gmail.com',
-        senha: '12345678',
-      })
-      .expect(200)
-      .then((res) => {
-        token = res.body.token;
-      });
-  });
-
   describe('--- Método GET na rota /ativos ---', () => {
+    let token: string;
+    let ativoCriado: IAtivo;
+    beforeEach(async () => {
+      ativoCriado = {
+        qtdeAtivo: 60,
+        valorAtivo: new Decimal(20.5),
+      };
+      await request(app)
+        .post('/login')
+        .send({
+          email: 'fulano1@gmail.com',
+          senha: '12345678',
+        })
+        .expect(200)
+        .then((res) => {
+          token = res.body.token;
+        });
+    });
     describe('--- Método GET na rota /ativos/corretora ---', () => {
       it('Deve ser possivel ver todos ativos da Corretora', async () => {
         const response = await request(app)
@@ -109,6 +108,24 @@ describe('--- Testes na rota /ativos ---', () => {
   });
 
   describe('--- Método POST na rota /ativos ---', () => {
+    let token: string;
+    let ativoCriado: IAtivo;
+    beforeEach(async () => {
+      ativoCriado = {
+        qtdeAtivo: 60,
+        valorAtivo: new Decimal(20.5),
+      };
+      await request(app)
+        .post('/login')
+        .send({
+          email: 'fulano1@gmail.com',
+          senha: '12345678',
+        })
+        .expect(200)
+        .then((res) => {
+          token = res.body.token;
+        });
+    });
     it('Deve ser possivel cadastrar uma ação', async () => {
       const response = await request(app)
         .post('/ativos')

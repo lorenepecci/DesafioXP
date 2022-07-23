@@ -3,7 +3,7 @@ import request from 'supertest';
 import { app } from '../app';
 const { expect } = chai;
 
-describe('--- Testes na rota /conta ---', () => {
+describe('--- Testes na rota /conta/extrato ---', () => {
   let token: string;
   before(async () => {
     await request(app)
@@ -17,6 +17,34 @@ describe('--- Testes na rota /conta ---', () => {
         token = res.body.token;
       });
   });
+  describe('--- Método GET na rota /conta/extrato---', () => {
+    it('Deve ser possivel ver o extrato do cliente', async () => {
+      const response = await request(app)
+        .get('/conta/extrato?codCliente=1&inicio=2020-01-23&fim=2021-09-23')
+        .set('Authorization', token);
+      expect(response.status).to.be.equal(200);
+      expect(response.body).to.have.all.keys(['entradas', 'saidas']);
+    });
+
+    it('Erro token incorreto', async () => {
+      const response = await request(app)
+        .get('/conta/extrato?codCliente=1&inicio=2020-01-23&fim=2021-09-23')
+        .set('Authorization', token + 'erro');
+      expect(response.status).to.be.equal(401);
+      expect(response.body).to.have.key('message');
+      expect(response.body.message).to.be.equal('Token inválido.');
+    });
+
+    it('Erro "Token não encontrado ', async () => {
+      const response = await request(app).get(
+        '/conta/extrato?codCliente=1&inicio=2020-01-23&fim=2021-09-23'
+      );
+      expect(response.status).to.be.equal(401);
+      expect(response.body).to.have.key('message');
+      expect(response.body.message).to.be.equal('Token não encontrado.');
+    });
+  });
+
   describe('--- Método GET na rota /conta/:codCliente ---', () => {
     it('Deve ser possivel ver o saldo do cliente', async () => {
       const response = await request(app)
