@@ -1,4 +1,3 @@
-import { Decimal } from '@prisma/client/runtime';
 import { ErroHttp } from '../helpers/erroHttp';
 import { IDepositoRetirada } from '../interfaces/depositoRetirada';
 import { ClientesModel } from '../models/clientesModel';

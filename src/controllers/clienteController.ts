@@ -20,7 +20,6 @@ export class ClientesController {
     const { codCliente } = req.params;
     const clienteLogado = JSON.parse(res.locals.payload.dataUser);
     const codClienteLogado = clienteLogado.codCliente;
-    console.log(codCliente, codClienteLogado);
     if (codClienteLogado !== Number(codCliente)) {
       throw new ErroHttp(
         400,

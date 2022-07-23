@@ -7,7 +7,7 @@ export class CarteirasModel {
   constructor(prisma = new PrismaClient()) {
     this._prisma = prisma;
   }
-  async create(compra: ICarteiras) {
+  async create(compra: ICarteiras): Promise<ICarteiras> {
     return this._prisma.carteiraCliente.create({ data: compra });
   }
 
@@ -21,7 +21,6 @@ export class CarteirasModel {
   }
 
   async update(codAtivo: number, codCliente: number, qtdeAtivo: number) {
-    console.log(codAtivo, codCliente, qtdeAtivo);
     return this._prisma.carteiraCliente.updateMany({
       where: {
         codAtivo,
@@ -41,7 +40,7 @@ export class CarteirasModel {
     });
   }
 
-  async getCarteirasAtivo(codAtivo: number) {
+  async getCarteirasAtivo(codAtivo: number | undefined) {
     return this._prisma.carteiraCliente.findMany({
       where: {
         codAtivo,

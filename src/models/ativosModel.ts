@@ -7,19 +7,22 @@ export class AtivosModel {
   constructor(prisma = new PrismaClient()) {
     this._prisma = prisma;
   }
-  async create(ativo: IAtivo) {
+  async create(ativo: IAtivo): Promise<IAtivo> {
     return this._prisma.ativo.create({ data: ativo });
   }
 
-  async getAtivosCorretora() {
+  async getAtivosCorretora(): Promise<IAtivo[]> {
     return this._prisma.ativo.findMany();
   }
 
-  async getByAssets(codAtivo: number) {
+  async getByAssets(codAtivo: number): Promise<IAtivo | null> {
     return this._prisma.ativo.findUnique({ where: { codAtivo } });
   }
 
-  async updateQuantidadeAtivo(codAtivo: number, qtdeAtivo: number) {
+  async updateQuantidadeAtivo(
+    codAtivo: number,
+    qtdeAtivo: number
+  ): Promise<IAtivo> {
     return this._prisma.ativo.update({
       where: {
         codAtivo,

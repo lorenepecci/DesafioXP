@@ -6,9 +6,8 @@ export class CompraVendaModel {
 
   constructor(prisma = new PrismaClient()) {
     this._prisma = prisma;
-  } 
-  async create ( compraVenda: ICompraVenda ) {
-    console.log(compraVenda.valor, 'val')
+  }
+  async create(compraVenda: ICompraVenda): Promise<ICompraVenda> {
     return this._prisma.compraVenda.create({ data: compraVenda });
   }
 }

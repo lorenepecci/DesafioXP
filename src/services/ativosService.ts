@@ -1,17 +1,17 @@
 import 'express-async-errors';
 import { ErroHttp } from '../helpers/erroHttp';
-import { IAtivo } from '../interfaces/ativos';
+import { IAtivo, IAtivoRetorno } from '../interfaces/ativos';
 import { AtivosModel } from '../models/ativosModel';
 import { CarteirasModel } from '../models/carteirasModel';
 
 export class AtivosService {
-  private _model: AtivosModel;
   private _modelCarteira: CarteirasModel;
+  private _model: AtivosModel;
   constructor(model = new AtivosModel(), carteira = new CarteirasModel()) {
-    this._model = model;
     this._modelCarteira = carteira;
+    this._model = model;
   }
-  async create(ativo: IAtivo) {
+  async create(ativo: IAtivo): Promise<IAtivoRetorno> {
     const ativoCriado = await this._model.create(ativo);
     return {
       codAtivo: ativoCriado.codAtivo,

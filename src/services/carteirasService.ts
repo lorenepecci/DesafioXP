@@ -1,4 +1,5 @@
 import 'express-async-errors';
+import { ICarteiras, ICarteirasCliente } from '../interfaces/carteiras';
 import { AtivosModel } from '../models/ativosModel';
 import { CarteirasModel } from './../models/carteirasModel';
 
@@ -9,7 +10,7 @@ export class CarteirasService {
     this._model = model;
     this._modelAtivo = ativos;
   }
-  async getClienteCarteira(codCliente: number) {
+  async getClienteCarteira(codCliente: number): Promise<ICarteirasCliente[]> {
     const carteira = await this._model.getClienteCarteira(codCliente);
     const carteiraValor = carteira.map(async (ativo) => {
       const objAtivo = await this._modelAtivo.getByAssets(ativo.codAtivo);
@@ -21,7 +22,10 @@ export class CarteirasService {
     return listaResposta;
   }
 
-  async getClienteCarteiraAtivo(codAtivo: number, codCliente: number) {
+  async getClienteCarteiraAtivo(
+    codAtivo: number,
+    codCliente: number
+  ): Promise<ICarteiras | null> {
     return this._model.getClienteCarteiraAtivo(codAtivo, codCliente);
   }
   async handleCarteira(
@@ -29,7 +33,7 @@ export class CarteirasService {
     codAtivo: number,
     codCliente: number,
     qtdeAtivo: number
-  ) {
+  ): Promise<void> {
     const getClienteCarteiraAtivo = await this._model.getClienteCarteiraAtivo(
       codAtivo,
       codCliente

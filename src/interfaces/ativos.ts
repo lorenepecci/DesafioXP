@@ -4,3 +4,7 @@ export interface IAtivo {
   qtdeAtivo: number;
   valorAtivo: Decimal;
 }
+
+export interface IAtivoRetorno extends Omit<IAtivo, 'valorAtivo'> {
+  valor: number;
+}
