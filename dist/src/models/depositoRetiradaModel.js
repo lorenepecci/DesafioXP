@@ -22,6 +22,11 @@ class DepositoRetiradaModel {
             });
         });
     }
+    get(codCliente) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this._prisma.depositoRetirada.findMany({ where: { codCliente } });
+        });
+    }
 }
 exports.DepositoRetiradaModel = DepositoRetiradaModel;
 //# sourceMappingURL=depositoRetiradaModel.js.map

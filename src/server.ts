@@ -2,8 +2,7 @@ import 'dotenv/config';
 import 'fs';
 import swaggerUi from 'swagger-ui-express';
 import { app } from './app';
-
-const swaggerDocument = require('./swagger.json');
+import swaggerDocument from './swagger.json';
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

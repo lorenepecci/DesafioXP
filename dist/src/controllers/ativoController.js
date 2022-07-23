@@ -26,6 +26,12 @@ class AtivosController {
             return res.status(200).json(ativoCriado);
         });
     }
+    getAtivosCorretora(_req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const getAtivosCorretora = yield _service.getAtivosCorretora();
+            return res.status(200).json(getAtivosCorretora);
+        });
+    }
     getAssetsOuCliente(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { codAtivo, codCliente } = req.query;

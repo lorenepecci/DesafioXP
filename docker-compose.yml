@@ -6,7 +6,7 @@ services:
     restart: always
     platform: linux/amd64
     volumes:
-      - ./:/app/back
+      - ./:/app/back 
     ports:
       - 3001:${PORT}
     tty: true

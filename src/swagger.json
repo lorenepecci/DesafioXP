@@ -131,7 +131,7 @@
         "consumes": ["application/json"],
         "security": [
           {
-            "bearerAuth": []
+            "ApiKeyAuth": []
           }
         ],
         "requestBody": {
@@ -176,7 +176,7 @@
         "consumes": ["application/json"],
         "security": [
           {
-            "bearerAuth": []
+            "ApiKeyAuth": []
           }
         ],
         "requestBody": {
@@ -209,7 +209,7 @@
         "consumes": ["application/json"],
         "security": [
           {
-            "bearerAuth": []
+            "ApiKeyAuth": []
           }
         ],
         "requestBody": {
@@ -241,7 +241,7 @@
         "produces": ["application/json"],
         "security": [
           {
-            "bearerAuth": []
+            "ApiKeyAuth": []
           }
         ],
         "parameters": [
@@ -267,6 +267,46 @@
         }
       }
     },
+    "conta/extrato": {
+      "get": {
+        "summary": "Get conta extrato",
+        "description": "Get conta extrato",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "codCliente",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "inicio",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "incio",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
     "/investimentos/comprar": {
       "post": {
         "summary": "Criar compra",
@@ -275,7 +315,7 @@
         "consumes": ["application/json"],
         "security": [
           {
-            "bearerAuth": []
+            "ApiKeyAuth": []
           }
         ],
         "requestBody": {
@@ -308,7 +348,7 @@
         "consumes": ["application/json"],
         "security": [
           {
-            "bearerAuth": []
+            "ApiKeyAuth": []
           }
         ],
         "requestBody": {
@@ -329,6 +369,47 @@
                 "$ref": "#/definitions/vendaCriada"
               }
             }
+          }
+        }
+      }
+    },
+    "/investimentos/relatorio": {
+      "get": {
+        "summary": "Relatorio de investimentos por periodo",
+        "description": "Relatorio de investimentos por periodo ",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "codCliente",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "inicio",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "incio",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sucesso!"
           }
         }
       }

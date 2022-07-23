@@ -32,7 +32,6 @@ class ClientesController {
             const { codCliente } = req.params;
             const clienteLogado = JSON.parse(res.locals.payload.dataUser);
             const codClienteLogado = clienteLogado.codCliente;
-            console.log(codCliente, codClienteLogado);
             if (codClienteLogado !== Number(codCliente)) {
                 throw new erroHttp_1.ErroHttp(400, 'Ação nao permitida. Código do usuário incorreto.');
             }

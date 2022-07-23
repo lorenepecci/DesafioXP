@@ -16,7 +16,7 @@ const chai_1 = __importDefault(require("chai"));
 const supertest_1 = __importDefault(require("supertest"));
 const app_1 = require("../app");
 const { expect } = chai_1.default;
-describe('--- Testes na rota /conta ---', () => {
+describe('--- Testes na rota /conta/extrato ---', () => {
     let token;
     before(() => __awaiter(void 0, void 0, void 0, function* () {
         yield (0, supertest_1.default)(app_1.app)
@@ -30,6 +30,29 @@ describe('--- Testes na rota /conta ---', () => {
             token = res.body.token;
         });
     }));
+    describe('--- Método GET na rota /conta/extrato---', () => {
+        it('Deve ser possivel ver o extrato do cliente', () => __awaiter(void 0, void 0, void 0, function* () {
+            const response = yield (0, supertest_1.default)(app_1.app)
+                .get('/conta/extrato?codCliente=1&inicio=2020-01-23&fim=2021-09-23')
+                .set('Authorization', token);
+            expect(response.status).to.be.equal(200);
+            expect(response.body).to.have.all.keys(['entradas', 'saidas']);
+        }));
+        it('Erro token incorreto', () => __awaiter(void 0, void 0, void 0, function* () {
+            const response = yield (0, supertest_1.default)(app_1.app)
+                .get('/conta/extrato?codCliente=1&inicio=2020-01-23&fim=2021-09-23')
+                .set('Authorization', token + 'erro');
+            expect(response.status).to.be.equal(401);
+            expect(response.body).to.have.key('message');
+            expect(response.body.message).to.be.equal('Token inválido.');
+        }));
+        it('Erro "Token não encontrado ', () => __awaiter(void 0, void 0, void 0, function* () {
+            const response = yield (0, supertest_1.default)(app_1.app).get('/conta/extrato?codCliente=1&inicio=2020-01-23&fim=2021-09-23');
+            expect(response.status).to.be.equal(401);
+            expect(response.body).to.have.key('message');
+            expect(response.body.message).to.be.equal('Token não encontrado.');
+        }));
+    });
     describe('--- Método GET na rota /conta/:codCliente ---', () => {
         it('Deve ser possivel ver o saldo do cliente', () => __awaiter(void 0, void 0, void 0, function* () {
             const response = yield (0, supertest_1.default)(app_1.app)

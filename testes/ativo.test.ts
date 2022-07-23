@@ -1,8 +1,8 @@
 import { Decimal } from '@prisma/client/runtime';
 import chai from 'chai';
 import request from 'supertest';
-import { app } from '../app';
-import { IAtivo } from '../interfaces/ativos';
+import { app } from '../src/app';
+import { IAtivo } from '../src/interfaces/ativos';
 const { expect } = chai;
 
 describe('--- Testes na rota /ativos ---', () => {

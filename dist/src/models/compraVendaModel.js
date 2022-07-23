@@ -17,8 +17,16 @@ class CompraVendaModel {
     }
     create(compraVenda) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(compraVenda.valor, 'val');
             return this._prisma.compraVenda.create({ data: compraVenda });
+        });
+    }
+    get(codCliente) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this._prisma.compraVenda.findMany({
+                where: {
+                    codCliente,
+                },
+            });
         });
     }
 }

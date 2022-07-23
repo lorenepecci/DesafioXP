@@ -32,7 +32,6 @@ class CarteirasModel {
     }
     update(codAtivo, codCliente, qtdeAtivo) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(codAtivo, codCliente, qtdeAtivo);
             return this._prisma.carteiraCliente.updateMany({
                 where: {
                     codAtivo,

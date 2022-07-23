@@ -16,8 +16,8 @@ const ativosModel_1 = require("../models/ativosModel");
 const carteirasModel_1 = require("../models/carteirasModel");
 class AtivosService {
     constructor(model = new ativosModel_1.AtivosModel(), carteira = new carteirasModel_1.CarteirasModel()) {
-        this._model = model;
         this._modelCarteira = carteira;
+        this._model = model;
     }
     create(ativo) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -31,21 +31,23 @@ class AtivosService {
     }
     getByAssets(codAtivo) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (codAtivo === 0) {
-                const listaAtivos = yield this._model.getAtivosCorretora();
-                const ativosComprados = listaAtivos.map((ativo) => __awaiter(this, void 0, void 0, function* () {
-                    const ativoComprasLista = yield this._modelCarteira.getCarteirasAtivo(ativo.codAtivo);
-                    const reduceValorCompras = ativoComprasLista.reduce((ac, a) => ac + a.qtdeAtivo, 0);
-                    return Object.assign(Object.assign({}, ativo), { qtdeComprada: reduceValorCompras });
-                }));
-                const listaResposta = yield Promise.all(ativosComprados);
-                return listaResposta;
-            }
             const getAtivo = yield this._model.getByAssets(codAtivo);
             if (!getAtivo)
                 throw new erroHttp_1.ErroHttp(400, 'Esse ativo não existe. ');
             const { qtdeAtivo, valorAtivo } = getAtivo;
             return { codAtivo, qtdeAtivo, valor: Number(valorAtivo) };
+        });
+    }
+    getAtivosCorretora() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const listaAtivos = yield this._model.getAtivosCorretora();
+            const ativosComprados = listaAtivos.map((ativo) => __awaiter(this, void 0, void 0, function* () {
+                const ativoComprasLista = yield this._modelCarteira.getCarteirasAtivo(ativo.codAtivo);
+                const reduceValorCompras = ativoComprasLista.reduce((ac, a) => ac + a.qtdeAtivo, 0);
+                return Object.assign(Object.assign({}, ativo), { qtdeComprada: reduceValorCompras });
+            }));
+            const listaResposta = yield Promise.all(ativosComprados);
+            return listaResposta;
         });
     }
 }
