@@ -14,4 +14,8 @@ export class DepositoRetiradaModel {
       data: depositoRetirada,
     });
   }
+
+  async get(codCliente: number): Promise<IDepositoRetirada[] | undefined> {
+    return this._prisma.depositoRetirada.findMany({ where: { codCliente } });
+  }
 }
