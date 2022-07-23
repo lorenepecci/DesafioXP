@@ -17,10 +17,10 @@
   "basePath": "/",
   "components": {
     "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
       }
     }
   },
@@ -88,7 +88,7 @@
         "produces": ["application/json"],
         "security": [
           {
-            "bearerAuth": []
+            "ApiKeyAuth": []
           }
         ],
         "parameters": [
@@ -152,6 +152,18 @@
                 "$ref": "#/definitions/ativo"
               }
             }
+          }
+        }
+      }
+    },
+    "/ativos/corretora": {
+      "get": {
+        "summary": "Get Ativos da Corretora",
+        "description": "Get todos os ativos da Corretora",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation"
           }
         }
       }

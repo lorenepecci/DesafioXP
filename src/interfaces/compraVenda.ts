@@ -15,3 +15,7 @@ export interface ICompraVenda {
   data?: Date;
   valor: Decimal;
 }
+
+export interface ICompraVendaResposta extends Omit<ICompraVenda, 'data'> {
+  data: Date;
+}

@@ -15,6 +15,11 @@ export class AtivosController {
     return res.status(200).json(ativoCriado);
   }
 
+  async getAtivosCorretora(_req: Request, res: Response) {
+    const getAtivosCorretora = await _service.getAtivosCorretora();
+    return res.status(200).json(getAtivosCorretora);
+  }
+
   async getAssetsOuCliente(req: Request, res: Response) {
     const { codAtivo, codCliente } = req.query;
     if (codAtivo) {

@@ -11,7 +11,7 @@ const router = Router();
 router.use('/clientes', clientesRouter);
 router.use('/login', loginRouter);
 router.use('/conta', autenticarMiddleware, depositoRetiradaRouter);
-router.use('/ativos', autenticarMiddleware, ativosRouter);
+router.use('/ativos', ativosRouter);
 router.use('/investimentos', autenticarMiddleware, compraVendaRouter);
 
 export { router };

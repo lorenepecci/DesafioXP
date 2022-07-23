@@ -7,10 +7,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:integracao": "prisma db seed && mocha --require ts-node/register src/testes/**/*.test.ts --exit",
-    "test:unitario": "jest",
+    "test": "prisma db seed && mocha --require ts-node/register src/testes/**/*.test.ts --exit",
     "dev": "tsnd --transpile-only --exit-child src/server.ts",
-    "predev": "prisma migrate dev",
+    "predev": "prisma migrate dev && prisma db seed ",
     "build": "prisma generate && tsc",
     "start": "node dist/server.js"
   },

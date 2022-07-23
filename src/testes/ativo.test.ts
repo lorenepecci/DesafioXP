@@ -7,11 +7,12 @@ const { expect } = chai;
 
 describe('--- Testes na rota /ativos ---', () => {
   let token: string;
-  const ativoCriado: IAtivo = {
-    qtdeAtivo: 60,
-    valorAtivo: new Decimal(20.5),
-  };
-  before(async () => {
+  let ativoCriado: IAtivo;
+  beforeEach(async () => {
+    ativoCriado = {
+      qtdeAtivo: 60,
+      valorAtivo: new Decimal(20.5),
+    };
     await request(app)
       .post('/login')
       .send({
@@ -25,6 +26,21 @@ describe('--- Testes na rota /ativos ---', () => {
   });
 
   describe('--- Método GET na rota /ativos ---', () => {
+    describe('--- Método GET na rota /ativos/corretora ---', () => {
+      it('Deve ser possivel ver todos ativos da Corretora', async () => {
+        const response = await request(app)
+          .get('/ativos/corretora')
+          .set('Authorization', token);
+        expect(response.status).to.be.equal(200);
+        expect(response.body).to.be.an('array');
+        expect(response.body[0]).to.have.all.keys([
+          'codAtivo',
+          'qtdeAtivo',
+          'valorAtivo',
+          'qtdeComprada',
+        ]);
+      });
+    });
     describe('--- Método GET na rota /ativos/{codAtivo} ---', () => {
       it('Deve ser possivel ver o Ativo ', async () => {
         const response = await request(app)
@@ -36,19 +52,6 @@ describe('--- Testes na rota /ativos ---', () => {
           'codAtivo',
           'qtdeAtivo',
           'valor',
-        ]);
-      });
-      it('Deve ser possivel ver todos ativos da Corretora', async () => {
-        const response = await request(app)
-          .get('/ativos?codAtivo=0')
-          .set('Authorization', token);
-        expect(response.status).to.be.equal(200);
-        expect(response.body).to.be.an('array');
-        expect(response.body[0]).to.have.all.keys([
-          'codAtivo',
-          'qtdeAtivo',
-          'valorAtivo',
-          'qtdeComprada',
         ]);
       });
 
