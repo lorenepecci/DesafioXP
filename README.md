@@ -50,10 +50,13 @@ O desafio foi a construção de uma API com operações de CRUD e autenticação
 - TypeScript
 - Node.js
 - Express.js
-- JWT
-- Prisma
-- MySQL
-- Mocha, Chai and Supertest
+- JWT : Para autenticação do cliente
+- Bcrypt : Para a criptografia da senha cadastrada
+- Joi : Para a validação dos campos nas entradas de dados
+- express-async-errors : Para a captura de erros em um único middleware de erros
+- Prisma : ORM para mapeamento de bancos relacionais
+- MySQL : Gerenciador de banco de dados
+- Mocha, Chai and Supertest : Para a realização de testes E2E
 
 ### Recursos úteis
 
