@@ -14,6 +14,7 @@ Esta é uma API RESTful de simulação de operações bancárias com autenticaç
 - [Executando localmente](#executando-localmente)
   - [Com Docker](#com-docker)
   - [Sem Docker](#sem-docker)
+  - [Testes](#testes)
 - [Autora](#autora)
 
 ## Visão geral
@@ -120,11 +121,9 @@ Executa o projeto manualmente
 npm run dev
 ```
 
-##Testes
+## Testes
 
-Para rodar os testes E2E 
-
-Rodar os testes
+Para rodar os testes
 
 ```bash
 npm run test
