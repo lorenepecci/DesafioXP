@@ -3,7 +3,7 @@ import { ErroHttp } from '../helpers/erroHttp';
 import { VendaService } from '../services/vendaService';
 
 const _service = new VendaService();
-export class VendaController {
+export class VendaController { 
   async create(req: Request, res: Response) {
     const { codCliente, codAtivo, qtdeAtivo } = req.body;
     const clienteLogado = JSON.parse(res.locals.payload.dataUser);

@@ -16,7 +16,7 @@ export class CompraService {
     model = new CompraVendaModel(),
     ativo = new AtivosModel(),
     carteira = new CarteirasService(),
-    cliente = new ClientesModel()
+    cliente = new ClientesModel() 
   ) {
     this._model = model;
     this._modelAtivo = ativo;
@@ -41,7 +41,7 @@ export class CompraService {
     const saldoCliente = encontrarCliente?.saldo;
     const valorCompra = Number(encontrarAtivo.valorAtivo) * Number(qtdeAtivo);
     if (valorCompra > Number(saldoCliente)) {
-      throw new ErroHttp(400, 'Não há saldo disponível para esta compra.');
+      throw new ErroHttp(400, 'Não há saldo disponível para esta compra.'); 
     }
     const saldoAtual = Number(saldoCliente) - valorCompra;
     await this._modelCliente.updateSaldo(codCliente, saldoAtual);

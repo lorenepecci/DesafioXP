@@ -1,5 +1,4 @@
 import 'express-async-errors';
-import { ErroHttp } from '../helpers/erroHttp';
 import { IExtrato } from '../interfaces/extrato';
 import { DepositoRetiradaModel } from '../models/depositoRetiradaModel';
 
@@ -14,12 +13,9 @@ export class ExtratoService {
     fim: string
   ): Promise<IExtrato> {
     const historicoDR = await this._model.get(codCliente);
-    if (!historicoDR) {
-      throw new ErroHttp(404, 'Não existe nenhuma movimentação.');
-    }
     let entradas: number = 0;
     let saidas: number = 0;
-    historicoDR.forEach((historico) => {
+    historicoDR?.forEach((historico) => {
       const dataHistorico = historico.data as any;
       const dataInicio = new Date(inicio) as any;
       const dataFim = new Date(fim) as any;

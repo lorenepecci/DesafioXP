@@ -29,6 +29,7 @@
       "post": {
         "summary": "Cadastrar Cliente",
         "description": "Fazer o castro de um novo cliente .",
+        "tags": ["Clientes"],
         "produces": ["application/json"],
         "consumes": ["application/json"],
         "requestBody": {
@@ -43,10 +44,31 @@
         "responses": {
           "200": {
             "description": "sucesso!",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/clienteCriado"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/definitions/clienteCriado"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro !",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": [
+                    {
+                      "message": "Este usuário já foi cadastrado."
+                    },
+                    {
+                      "message": "Erro no corpo da requisição."
+                    }
+                  ]
+                }
               }
             }
           }
@@ -56,7 +78,8 @@
     "/login": {
       "post": {
         "summary": "Logar o Cliente",
-        "description": "Logar um cliente, para retornar seu token e codCliente",
+        "description": "Logar um cliente, para retornar seu token e codCliente. Após gerar o token, copie e cole na aba Authorize do canto direito desta página do swagger para poder desbloquear ações que precisam de autenticação",
+        "tags": ["Login"],
         "produces": ["application/json"],
         "consumes": ["application/json"],
         "requestBody": {
@@ -71,10 +94,31 @@
         "responses": {
           "200": {
             "description": "sucesso!",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/token"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/definitions/token"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro !",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": [
+                    {
+                      "message": "Email ou senha inválida."
+                    },
+                    {
+                      "message": "Erro no corpo da requisição."
+                    }
+                  ]
+                }
               }
             }
           }
@@ -83,8 +127,9 @@
     },
     "/ativos": {
       "get": {
-        "summary": "Ver um ativo ou a carteira de um cliente",
-        "description": "Buscar os ativos da Corretora por codAtivo ou buscar a Carteira do Cliente por codCliente",
+        "summary": "Ver um Ativo da Corretora ou a Carteira de um Cliente",
+        "description": "Buscar os ativos da Corretora por codAtivo ou buscar a Carteira do Cliente por codCliente. Atenção: o codCliente deve ser o mesmo que o codCliente logado.",
+        "tags": ["Ativos"],
         "produces": ["application/json"],
         "security": [
           {
@@ -120,13 +165,48 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Erro !",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "message": "Ação nao permitida. Código do usuário incorreto."
+                    },
+                    {
+                      "message": "Esse ativo não existe. "
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro !",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "message": "Não existe esta query para esta requisição."
+                    },
+                    {
+                      "message": "Parâmetro deve ser um numero inteiro."
+                    }
+                  ]
+                }
+              }
+            }
           }
         }
       },
 
       "post": {
-        "summary": "Criar um ativo",
-        "description": "Cadastrar um novo ativo na Corretora",
+        "summary": "Cadastrar um ativo na corretora",
+        "description": "Cadastrar um novo ativo na Corretora. Atenção: o codCliente deve ser o mesmo que o codCliente logado.",
+        "tags": ["Ativos"],
         "produces": ["application/json"],
         "consumes": ["application/json"],
         "security": [
@@ -146,10 +226,27 @@
         "responses": {
           "200": {
             "description": "sucesso!",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/ativo"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/definitions/ativo"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro !",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "message": "Erro no corpo da requisição."
+                    }
+                  ]
+                }
               }
             }
           }
@@ -160,10 +257,20 @@
       "get": {
         "summary": "Ver Ativos da Corretora",
         "description": "Ver todos os ativos da Corretora",
+        "tags": ["Ativos"],
         "produces": ["application/json"],
         "responses": {
           "200": {
-            "description": "successful operation"
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/definitions/ativosCorretora"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -172,6 +279,7 @@
       "post": {
         "summary": "Fazer um deposito",
         "description": "Fazer um deposito na conta Logada ou em outra conta existente.",
+        "tags": ["Conta"],
         "produces": ["application/json"],
         "consumes": ["application/json"],
         "security": [
@@ -191,10 +299,43 @@
         "responses": {
           "200": {
             "description": "sucesso!",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/depositoCriado"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/definitions/depositoCriado"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro !",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "message": "Erro no corpo da requisição."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+
+          "400": {
+            "description": "Erro !",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "message": "Você não tem saldo disponível. Seu saldo é de 999.99"
+                    },
+                    { "message": "Esse cliente não existe." }
+                  ]
+                }
               }
             }
           }
@@ -204,7 +345,8 @@
     "/conta/saque": {
       "post": {
         "summary": "Fazer um saque",
-        "description": "Fazer um saque na conta Logada.",
+        "description": "Fazer um saque na conta Logada. Atenção: o codCliente deve ser o mesmo que o codCliente logado.",
+        "tags": ["Conta"],
         "produces": ["application/json"],
         "consumes": ["application/json"],
         "security": [
@@ -224,10 +366,45 @@
         "responses": {
           "200": {
             "description": "sucesso!",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/retiradaCriada"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/definitions/retiradaCriada"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro !",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "message": "Erro no corpo da requisição."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "message": "Ação nao permitida. Código do usuário incorreto."
+                    },
+                    { "message": "Conta inválida." },
+                    {
+                      "message": "Você não tem saldo disponível. Seu saldo é de 20.99"
+                    }
+                  ]
+                }
               }
             }
           }
@@ -237,7 +414,8 @@
     "/conta/{codCliente}": {
       "get": {
         "summary": "Ver Saldo",
-        "description": "Ver saldo da conta Logada.",
+        "description": "Ver saldo da conta Logada. Atenção: o codCliente deve ser o mesmo que o codCliente logado.",
+        "tags": ["Conta"],
         "produces": ["application/json"],
         "security": [
           {
@@ -263,14 +441,30 @@
                 }
               }
             }
+          },
+
+          "400": {
+            "description": "Erro!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "message": "Ação nao permitida. Código do usuário incorreto."
+                    }
+                  ]
+                }
+              }
+            }
           }
         }
       }
     },
     "/conta/extrato": {
       "get": {
-        "summary": "Ver extrato",
-        "description": "Ver extrato da conta Logada por periodo desejado.",
+        "summary": "Ver extrato por período",
+        "description": "Ver extrato da conta Logada por periodo desejado. Atenção: o codCliente deve ser o mesmo que o codCliente logado.",
+        "tags": ["Conta"],
         "produces": ["application/json"],
         "security": [
           {
@@ -304,15 +498,56 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation"
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/extrato"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "message": "Campos incorretos ou faltantes. Os campos são codCliente, inicio e fim."
+                    },
+                    {
+                      "message": "Parâmetro deve ser um numero inteiro. "
+                    },
+                    {
+                      "message": "Parâmetro deve ter o formato aaaa-mm-dd "
+                    }
+                  ]
+                }
+              }
+            }
+          },
+
+          "400": {
+            "description": "Erro!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "Ação nao permitida. Código do usuário incorreto."
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
     "/investimentos/comprar": {
       "post": {
-        "summary": "Criar compra",
-        "description": "Criar compra - retorna dados compra",
+        "summary": "Criar compra de um Ativo",
+        "description": "Criar compra - retorna dados compra. Atenção: o codCliente deve ser o mesmo que o codCliente logado.",
+        "tags": ["Investimentos"],
         "produces": ["application/json"],
         "consumes": ["application/json"],
         "security": [
@@ -332,10 +567,33 @@
         "responses": {
           "200": {
             "description": "sucesso!",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/compraCriada"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/definitions/compraCriada"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "message": "Ação nao permitida. Código do usuário incorreto."
+                    },
+                    {
+                      "message": "Não há saldo disponível para esta compra."
+                    },
+                    {
+                      "message": "Essa quantidade é maior que a quantidade disponível na corretora"
+                    }
+                  ]
+                }
               }
             }
           }
@@ -344,8 +602,9 @@
     },
     "/investimentos/vender": {
       "post": {
-        "summary": "Criar venda",
-        "description": "Criar venda - retorna dados venda",
+        "summary": "Criar venda de um Ativo",
+        "description": "Criar venda - retorna dados venda. Atenção: o codCliente deve ser o mesmo que o codCliente logado.",
+        "tags": ["Investimentos"],
         "produces": ["application/json"],
         "consumes": ["application/json"],
         "security": [
@@ -365,10 +624,47 @@
         "responses": {
           "200": {
             "description": "sucesso!",
-            "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/vendaCriada"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/definitions/vendaCriada"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "message": "Ação nao permitida. Código do usuário incorreto."
+                    },
+                    {
+                      "message": "Essa quantidade é maior que a quantidade disponível na carteira."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "message": "Este Ativo não existe."
+                    },
+                    {
+                      "message": "Esse item na carteira não existe."
+                    }
+                  ]
+                }
               }
             }
           }
@@ -378,7 +674,8 @@
     "/investimentos/relatorio": {
       "get": {
         "summary": "Relatorio de investimentos por periodo",
-        "description": "Relatorio de investimentos por periodo ",
+        "description": "Relatorio de investimentos por periodo. Atenção: o codCliente deve ser o mesmo que o codCliente logado. ",
+        "tags": ["Investimentos"],
         "produces": ["application/json"],
         "consumes": ["application/json"],
         "security": [
@@ -413,7 +710,47 @@
         ],
         "responses": {
           "200": {
-            "description": "sucesso!"
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/relatorio"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "message": "Campos incorretos ou faltantes. Os campos são codCliente, inicio e fim."
+                    },
+                    {
+                      "message": "Parâmetro deve ser um numero inteiro. "
+                    },
+                    {
+                      "message": "Parâmetro deve ter o formato aaaa-mm-dd "
+                    }
+                  ]
+                }
+              }
+            }
+          },
+
+          "400": {
+            "description": "Erro!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "message": "Ação nao permitida. Código do usuário incorreto."
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -490,6 +827,10 @@
           "type": "string",
           "codCliente": "number"
         }
+      },
+      "example": {
+        "type": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhVXNlciI6IntcImNvZENsaWVudGVcIjoyOSxcIm5vbWVcIjpcImZ1bGFubzRcIixcInNlbmhhXCI6XCIkMmEkMDgkL0x",
+        "codCliente": 5
       }
     },
     "ativo": {
@@ -504,6 +845,11 @@
         "valorAtivo": {
           "type": "double"
         }
+      },
+      "example": {
+        "codAtivo": 1,
+        "qtdeAtivo": 14,
+        "valorAtivo": 30.69
       }
     },
     "ativoBody": {
@@ -666,6 +1012,45 @@
     "fim": {
       "type": "string",
       "example": "2023-01-28"
+    },
+    "extrato": {
+      "type": "object",
+      "example": {
+        "entradas": 200.99,
+        "saidas": 20.99
+      }
+    },
+    "ativosCorretora": {
+      "type": "array",
+      "example": [
+        {
+          "codAtivo": 1,
+          "qtdeAtivo": 14,
+          "valorAtivo": 30.69
+        },
+        {
+          "codAtivo": 2,
+          "qtdeAtivo": 24,
+          "valorAtivo": 38.69
+        }
+      ]
+    },
+    "relatorio": {
+      "type": "array",
+      "example": [
+        {
+          "codAtivo": 2,
+          "total": 55,
+          "tipoCompra": true,
+          "data": "24/6/2022"
+        },
+        {
+          "codAtivo": 2,
+          "total": 55,
+          "tipoCompra": true,
+          "data": "24/6/2022"
+        }
+      ]
     }
   }
 }

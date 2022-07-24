@@ -10,7 +10,7 @@ export class CompraController {
     const codClienteLogado = clienteLogado.codCliente;
     if (codCliente !== codClienteLogado) {
       throw new ErroHttp(
-        400,
+        400, 
         'Ação nao permitida. Código do usuário incorreto.'
       );
     }

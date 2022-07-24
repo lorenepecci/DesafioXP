@@ -18,9 +18,6 @@ export class RelatorioService {
       codCliente
     )) as ICompraVendaResposta[];
     const listaRelatorio = [] as IRelatorio[];
-    if (!historicoCV) {
-      throw new ErroHttp(404, 'Não existe histórico.');
-    }
     historicoCV.forEach((historico) => {
       const dataHistorico = historico.data as any;
       const dataInicio = new Date(inicio) as any;
