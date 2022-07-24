@@ -86,6 +86,9 @@ Sobe os containers
 docker-compose up -d
 ```
 
+Agora a aplicação já está rodando em desenvolvimento, só entrar em:  http://localhost:3001/api-docs/
+
+
 ### Sem Docker
 
 **É necessário ter o Node.js e o MySQL instalado localmente!**
@@ -115,6 +118,16 @@ Executa o projeto manualmente
 
 ```bash
 npm run dev
+```
+
+##Testes
+
+Para rodar os testes E2E 
+
+Rodar os testes
+
+```bash
+npm run test
 ```
 
 ## Autora
