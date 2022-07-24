@@ -6,8 +6,8 @@ Esta é uma API RESTful de simulação de operações bancárias com autenticaç
 
 - [Visão geral](#visão-geral)
   - [O desafio](#o-desafio)
-  - [Imagens](#imagens)
-  - [Links](#links)
+  - [Imagens](#Imagem-do-banco-de-dados)
+  - [Links](#Link-da-Documentação-da-API)
 - [Meu processo](#meu-processo)
   - [Construído com](#construído-com)
   - [Recursos úteis](#recursos-úteis)
@@ -20,7 +20,7 @@ Esta é uma API RESTful de simulação de operações bancárias com autenticaç
 
 ### O desafio
 
-O desafio foi a construção de uma API com operações de CRUD com autenticação do Cliente.
+O desafio foi a construção de uma API com operações de CRUD e autenticação do Cliente.
 
 **Os clientes devem ser capaz de?**
 
