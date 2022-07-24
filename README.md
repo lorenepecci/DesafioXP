@@ -33,12 +33,12 @@ O desafio foi a construção de uma API com operações de CRUD com autenticaç�
 - Verificar o Extrato Bancário por período desejado.
 - Verificar o Relatório de Investimentos por período desejado.
 
-### Imagens
+### Imagem do Banco de Dados
 
 <small>Banco de Dados</small>
 ![](./investimentosXP.png)
 
-### Links
+### Link da Documentação da API
 
 - URL da aplicação: https://invest-xp.herokuapp.com/api-docs/
 
