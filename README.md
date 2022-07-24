@@ -25,7 +25,7 @@ O desafio foi a construção de uma API com operações de CRUD e autenticação
 **Os clientes devem ser capaz de?**
 
 - Registrar-se e Autenticar-se
-- Fazer Depósitos e Retiras da conta Bancária.
+- Fazer Depósitos e Retiradas da conta Bancária.
 - Fazer Compra e Venda de Ativos.
 - Buscar Ativos da Corretora.
 - Buscar Ativos da Carteira de Investimentos da Conta.

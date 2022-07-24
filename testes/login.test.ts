@@ -1,8 +1,8 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import request from 'supertest';
-import { app } from '../app';
-import { ILogin } from '../interfaces/login';
+import { app } from '../src/app';
+import { ILogin } from '../src/interfaces/login';
 
 chai.use(chaiHttp);
 const { expect } = chai;

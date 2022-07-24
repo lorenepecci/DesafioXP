@@ -1,7 +1,7 @@
 import chai from 'chai';
 import request from 'supertest';
-import { app } from '../app';
-import { ICliente } from '../interfaces/clientes';
+import { app } from '../src/app';
+import { ICliente } from '../src/interfaces/clientes';
 const { expect } = chai;
 
 describe('--- Testes na rota /clientes ---', () => {

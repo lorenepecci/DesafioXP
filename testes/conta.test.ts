@@ -1,6 +1,6 @@
 import chai from 'chai';
 import request from 'supertest';
-import { app } from '../app';
+import { app } from '../src/app';
 const { expect } = chai;
 
 describe('--- Testes na rota /conta/extrato ---', () => {
